@@ -76,15 +76,22 @@
 		   <input type="text" class="form-control" name="login" ng-model="model.login" ng-minlength="3" required placeholder="Usu&aacute;rio" />
 		   <p ng-show="form_access.login.$invalid && !form_access.login.$pristine" class="help-block">Usu&aacute;rio deve conter no m&iacute;nimo 3 caracteres</p>
 	  </div>  
-	  <div class="form-group" ng-class="{ 'has-error': form_access.password.$invalid && !form_access.login.$pristine}" >
+	  <div class="form-group" ng-class="{ 'has-error': form_access.password.$invalid && !form_access.password.$pristine}" >
 		   <label class="control-label">Senha</label>
-		   <input type="password" class="form-control" name="password" ng-model="model.password" ng-minlength="3" required placeholder="Senha" />
-		   <p ng-show="form_access.password.$invalid && !form_access.login.$pristine" class="help-block">Senha deve conter no m&iacute;nimo 3 caracteres</p>
+		   <input type="password" class="form-control" name="password" ng-model="password_tmp" ng-minlength="3" required placeholder="Senha" />
+		   <p ng-show="form_access.password.$invalid && !form_access.password.$pristine" class="help-block">Senha deve conter no m&iacute;nimo 3 caracteres</p>
 	  </div>
 	  <div class="form-group" ng-class="{ 'has-error':  form_access.password_c.$invalid && !form_access.password_c.$pristine}" >
 		   <label class="control-label">Confirmar Senha</label>
-		   <input type="password" class="form-control" name="password_c" ng-model="model.password_c" ng-minlength="3" required placeholder="Confirmar Senha" valid-password="model.password" />
+		   <input type="password" class="form-control" name="password_c" ng-model="password_c" ng-minlength="3" required placeholder="Confirmar Senha" valid-password="password_tmp" />
 		   <p ng-show="form_access.password_c.$invalid && !form_access.password_c.$pristine" class="help-block">Senha n&atilde;o &eacute; igual a informada no campo anterior</p>
+	  </div>
+	  <div class="form-group" ng-class="{ 'has-error': form.access_level.$invalid && submitted} " >
+			<label class="control-label">N&iacute;vel de Acesso</label>
+			<select name="access_level" id="access_level" ng-model="model.access_level"  
+				ng-options="access_level.id as access_level.name for access_level in access_levels" required>	      
+		    </select>
+			<p ng-show="form.access_level.$invalid  && submitted" class="help-block">N&iacute;vel de Acesso deve ser selecionado</p>			
 	  </div>
   </div>
   <button type="submit" class="btn btn-primary" ng-click="update_access()" ng-disabled="form_access.$invalid">Salvar</button>

@@ -440,7 +440,7 @@ app.controller('EmployeeRoleCtrl',function ($scope,$http) {
 }); 
 
 
-app.controller('EmployeePersonCtrl',function ($scope,$http) {
+app.controller('EmployeePersonCtrl',function ($scope,$http,md5) {
 	
 	var page_list = "pages/employee/employee_person_list.html";
 	var page_new = "pages/employee/employee_person_new.html";
@@ -452,8 +452,11 @@ app.controller('EmployeePersonCtrl',function ($scope,$http) {
 	$scope.models = [];
 	
 	$scope.roles = [];
+
+	$scope.access_levels = [{id:0,name:"Administrador"},{id:1,name:"Usuário"}];
 	
 	$scope.persons = [];
+	$scope.password_tmp = "";
 	
 	
 	$scope.model = newEmployeePerson();
@@ -486,7 +489,7 @@ app.controller('EmployeePersonCtrl',function ($scope,$http) {
 	
 	$http.get(url_employee_person_get_all)
 	.then(function(response) {
-		$scope.models = response.data;		
+		$scope.models = response.data;
 	});
 	
 	    	
@@ -517,7 +520,7 @@ app.controller('EmployeePersonCtrl',function ($scope,$http) {
 	}
 	$scope.delete_ = function(vmodel) {
 		if(confirm("Deseja realmente excluir esse registro ("+vmodel.id+" - "+vmodel.name+")?")) {
-			$http.get(url_product_item_delete+vmodel.id).
+			$http.get(url_employee_person_delete+vmodel.id).
     		then(function(response) {
     			if(response.data == true) {
     				$scope.back();
@@ -540,13 +543,15 @@ app.controller('EmployeePersonCtrl',function ($scope,$http) {
 		   $scope.model.role.id != null && $scope.model.role.id != 0 &&
 		   $scope.model.boss.id != null ) {
 			
+			$scope.model.document = $scope.model.document.replace(/\./g,'').replace('-','').replace('/',''); 
+			console.log("document:"+$scope.model.document);
+			
 			$scope.submitted = false;
-			console.log("employee-person:save!!");
 			
 			$http.post(url_employee_person_save,$scope.model)			
 			.then(function(response) {
 				if(response.data == true) {
-					
+					alert('Registro salvo com sucesso!');
 					$scope.back();
 				} else {
 					alert('Erro ao salvar registro, por gentileza, contate o seu suporte.');
@@ -558,7 +563,30 @@ app.controller('EmployeePersonCtrl',function ($scope,$http) {
 		
 	}
 	$scope.update_access = function() {
-		console.log("employee-person:save!!");
+		$scope.model.password = md5.createHash($scope.password_tmp);  
+		
+		$http.get(url_employee_person_get_login+$scope.model.login)			
+		.then(function(response) {
+			if(response.data != null && response.data.id != $scope.model.id ) {
+				alert('Usuário ('+scope.model.login+') não pode ser utilizado pois já está sendo usado por outro funcionario.');
+				
+			} else {
+				$http.post(url_employee_person_update_access,$scope.model)			
+				.then(function(response) {
+					if(response.data == true) {
+						
+						alert('Nível de Acesso atualizado com sucesso!');
+					} else {
+						alert('Erro ao atualizar o N&iacute;vel de Acesso, por gentileza, contate o seu suporte.');
+					} 		
+					
+				});
+				
+			} 		
+			
+		});
+		
+		
 	}
 	
 	

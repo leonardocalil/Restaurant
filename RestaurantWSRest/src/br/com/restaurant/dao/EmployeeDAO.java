@@ -34,12 +34,34 @@ public class EmployeeDAO extends AbstractDAO<EmployeeModel> {
 		boolean result = false;
 		String sql = "UPDATE restaurant.employee SET name = '"+model.getName()+"',"
 												+ "phone = '"+model.getPhone()+"',"
-												+ "email = '"+model.getEmail()+","
+												+ "email = '"+model.getEmail()+"',"
 												+ "document='"+model.getDocument()+"',"
 												+ "address_name='"+model.getAddress_name()+"',"
 												+ "address_number='"+model.getAddress_number()+"',"
 												+ "address_complement='"+model.getAddress_complement()+"',"
-												+ "zip_code='"+model.getZip_code()+"' "												
+												+ "zip_code='"+model.getZip_code()+"', "
+												+ "role_id="+model.getRole().getId()+", "
+												+ "boss_id="+model.getBoss().getId()+" "												
+												+ "WHERE id = "+model.getId();
+		
+		DBConnection db = new DBConnection();
+		
+		try {
+			result = db.ExecuteSql(sql);				
+						
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			db.finalize();
+		}
+		return result;
+	}
+	public boolean update_access(EmployeeModel model) {
+		boolean result = false;
+		String sql = "UPDATE restaurant.employee SET login = '"+model.getLogin()+"',"
+												+ "password = '"+model.getPassword()+"',"
+												+ "access_level = "+model.getAccess_level()+" "
 												+ "WHERE id = "+model.getId();
 		
 		DBConnection db = new DBConnection();
@@ -59,10 +81,10 @@ public class EmployeeDAO extends AbstractDAO<EmployeeModel> {
 		boolean result = false;
 		String sql = "";
 		sql = "INSERT INTO restaurant.employee (id,name,phone,email,document,address_name,address_number,address_complement,"
-				+ "zip_code) "
+				+ "zip_code,role_id,boss_id) "
 				+ "VALUES (nextval('client_seq'),'"+model.getName()+"','"+model.getPhone()+"','"+model.getEmail()+"','"
 				+  model.getDocument()+"','"+model.getAddress_name()+"','"+model.getAddress_number()+"','"+model.getAddress_complement()+"','"
-				+  model.getZip_code()+"')";
+				+  model.getZip_code()+"',"+model.getRole().getId()+","+model.getBoss().getId()+")";
 		
 		DBConnection db = new DBConnection();
 		
@@ -103,7 +125,7 @@ public class EmployeeDAO extends AbstractDAO<EmployeeModel> {
 						+ "r.id r_id, r.name r_name, r.description r_description, "
 						+ "b.id b_id,b.name b_name,b.phone b_phone,b.email b_email,b.document b_document,b.address_name b_address_name,b.address_number b_address_number,b.address_complement b_address_number, b.zip_code b_zip_code,b.login b_login,b.access_level b_access_level "
 						+ "FROM restaurant.employee e "
-						+ "INNER JOIN restaurant.role r ON (e.role_id = r.id  and r.deleted = 0) "
+						+ "LEFT JOIN restaurant.role r ON (e.role_id = r.id  and r.deleted = 0) "
 						+ "LEFT JOIN restaurant.employee b ON (e.boss_id = b.id and b.deleted = 0) ";
 				if(filter != null && filter.length() > 0) {
 					sql+= "WHERE "+filter;

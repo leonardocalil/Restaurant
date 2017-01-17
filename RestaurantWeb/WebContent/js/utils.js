@@ -20,6 +20,9 @@ var url_employee_person_get_all = 'http://localhost:8080/RestaurantWSRest/rest/e
 var url_employee_person_get = 'http://localhost:8080/RestaurantWSRest/rest/employee/get/';
 var url_employee_person_save = 'http://localhost:8080/RestaurantWSRest/rest/employee/save';
 var url_employee_person_delete = 'http://localhost:8080/RestaurantWSRest/rest/employee/delete/';
+var url_employee_person_update_access = 'http://localhost:8080/RestaurantWSRest/rest/employee/update_access/';
+var url_employee_person_get_login = 'http://localhost:8080/RestaurantWSRest/rest/employee/getByLogin/';
+
 
 function newProductType() {
 	return {id: 0, description:""};

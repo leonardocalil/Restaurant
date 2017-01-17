@@ -33,6 +33,12 @@ public class Employee {
 		return EmployeeCtrl.save(model);
 	}
 	
+	@POST
+	@Path("update_access")
+	@Produces(MediaType.APPLICATION_JSON)
+	public boolean update_access(EmployeeModel model) {
+		return EmployeeCtrl.update_access(model);
+	}
 	
 	@GET
 	@Path("get/{id}")

@@ -40,6 +40,9 @@ public class EmployeeCtrl {
 		}
 		
 	}
+	public static boolean update_access(EmployeeModel model) {
+		return new EmployeeDAO().update_access(model);
+	}
 	
 	
 }
