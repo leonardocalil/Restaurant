@@ -1,4 +1,4 @@
-var app = angular.module("AdminApp", ["ngRoute","angularUtils.directives.dirPagination","angular-md5"]); 
+var app = angular.module("AdminApp", ["ngRoute","angularUtils.directives.dirPagination","angular-md5","ui.bootstrap"]); 
 
 app.config(function($routeProvider) {
 	$routeProvider
@@ -583,10 +583,10 @@ app.controller('EmployeePersonCtrl',function ($scope,$http,md5) {
 	$scope.update_access = function() {
 		$scope.model.password = md5.createHash($scope.password_tmp);  
 		
-		$http.get(url_employee_person_get_login+$scope.model.login)			
+		$http.get(url_employee_person_exists_login+$scope.model.login)			
 		.then(function(response) {
-			if(response.data != null && response.data.id != $scope.model.id ) {
-				alert('Usuário ('+scope.model.login+') não pode ser utilizado pois já está sendo usado por outro funcionario.');
+			if(response.data != 0 && response.data != $scope.model.id ) {
+				alert('Usuário ('+$scope.model.login+') não pode ser utilizado pois já está sendo usado por outro funcionario.');
 				
 			} else {
 				$http.post(url_employee_person_update_access,$scope.model)			
@@ -606,6 +606,42 @@ app.controller('EmployeePersonCtrl',function ($scope,$http,md5) {
 		
 		
 	}
+	
+	
+});
+
+
+app.controller('OrderQueueCtrl',function ($scope,$http) {
+	
+	var page_list = "pages/order/order_queue_list.html";
+	
+	$scope.page = page_list;
+	
+	$scope.models = [];
+	$scope.sites = [];
+	$scope.site = "0";
+	
+	$scope.model = newEmployeePerson();
+	
+	$http.get(url_site_get_all)
+	.then(function(response) {
+		$scope.sites = response.data;		
+		$scope.sites.unshift({id:"0",name:"TODOS"})
+	});
+	
+
+	  $scope.items = ['Item 1', 'Item 2', 'Item 3'];
+
+	  $scope.addItem = function() {
+	    var newItemNo = $scope.items.length + 1;
+	    $scope.items.push('Item ' + newItemNo);
+	  };
+
+	  $scope.status = {
+	    isCustomHeaderOpen: false,
+	    isFirstOpen: true,
+	    isFirstDisabled: false
+	  };
 	
 	
 }); 

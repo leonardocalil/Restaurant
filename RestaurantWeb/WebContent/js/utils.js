@@ -21,7 +21,12 @@ var url_employee_person_get = 'http://localhost:8080/RestaurantWSRest/rest/emplo
 var url_employee_person_save = 'http://localhost:8080/RestaurantWSRest/rest/employee/save';
 var url_employee_person_delete = 'http://localhost:8080/RestaurantWSRest/rest/employee/delete/';
 var url_employee_person_update_access = 'http://localhost:8080/RestaurantWSRest/rest/employee/update_access/';
-var url_employee_person_get_login = 'http://localhost:8080/RestaurantWSRest/rest/employee/getByLogin/';
+var url_employee_person_exists_login = 'http://localhost:8080/RestaurantWSRest/rest/employee/existsLogin/';
+
+
+var url_site_get_all = 'http://localhost:8080/RestaurantWSRest/rest/site/getAll/'
+	
+var url_order_get_all = 'http://localhost:8080/RestaurantWSRest/rest/order/getAll/'
 
 
 function newProductType() {

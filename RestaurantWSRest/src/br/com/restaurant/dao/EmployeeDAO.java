@@ -123,7 +123,7 @@ public class EmployeeDAO extends AbstractDAO<EmployeeModel> {
 				List<EmployeeModel> result = new ArrayList<EmployeeModel>();
 				String sql = "SELECT e.id,e.name,e.phone,e.email,e.document,e.address_name,e.address_number,e.address_complement, e.zip_code,e.login,e.access_level, "
 						+ "r.id r_id, r.name r_name, r.description r_description, "
-						+ "b.id b_id,b.name b_name,b.phone b_phone,b.email b_email,b.document b_document,b.address_name b_address_name,b.address_number b_address_number,b.address_complement b_address_number, b.zip_code b_zip_code,b.login b_login,b.access_level b_access_level "
+						+ "b.id b_id,b.name b_name,b.phone b_phone,b.email b_email,b.document b_document,b.address_name b_address_name,b.address_number b_address_number,b.address_complement b_address_complement, b.zip_code b_zip_code,b.login b_login,b.access_level b_access_level "
 						+ "FROM restaurant.employee e "
 						+ "LEFT JOIN restaurant.role r ON (e.role_id = r.id  and r.deleted = 0) "
 						+ "LEFT JOIN restaurant.employee b ON (e.boss_id = b.id and b.deleted = 0) ";
@@ -203,14 +203,14 @@ public class EmployeeDAO extends AbstractDAO<EmployeeModel> {
 			
 	
 	}
-	public EmployeeModel getByLogin(String login) {
+	public int existsLogin(String login) {
 		// TODO Auto-generated method stub
 		
 		List<EmployeeModel> result = getAll("e.login = '"+login+"' ");
 		if(result.size() > 0) {
-			return result.get(0);
+			result.get(0).getId();
 		}
-		return null;
+		return 0;
 			
 		
 		

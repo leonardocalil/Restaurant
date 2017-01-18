@@ -58,11 +58,11 @@ public class Employee {
 	}
 	
 	@GET
-	@Path("getByLogin/{login}")
+	@Path("existsLogin/{login}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public EmployeeModel getByLogin(@PathParam("login") String login) {
-		
-		return EmployeeCtrl.getByLogin(login);
+	public int existsLogin(@PathParam("login") String login) {
+	
+		return EmployeeCtrl.existsLogin(login);
 	}
 	@GET
 	@Path("delete/{id}")

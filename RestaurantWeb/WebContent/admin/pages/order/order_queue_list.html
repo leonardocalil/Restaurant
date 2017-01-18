@@ -1,0 +1,15 @@
+<div class="form-group" >
+	<label class="control-label">Destino</label>
+	<select name="boss" id="boss" ng-model="site" required 
+		ng-options="aux.id as aux.name for aux in sites">	      
+    </select>			
+</div>
+
+<uib-accordion >
+    <div uib-accordion-group class="panel-default" is-open="status.open">
+      <uib-accordion-heading>
+      	Pedido Nr:, Cliente: , Data/Hora: , Destino: , Status: <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': status.open, 'glyphicon-chevron-right': !status.open}"></i>
+      </uib-accordion-heading>
+      This is just some content to illustrate fancy headings.
+    </div>
+</uib-accordion>

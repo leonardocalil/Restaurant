@@ -25,8 +25,8 @@ public class EmployeeCtrl {
 		}
 		return null;
 	}
-	public static EmployeeModel getByLogin(String login) {
-		return new EmployeeDAO().getByLogin(login);
+	public static int existsLogin(String login) {
+		return new EmployeeDAO().existsLogin(login);
 	}
 	public static boolean delete(String id) {
 		return new EmployeeDAO().delete(id);
