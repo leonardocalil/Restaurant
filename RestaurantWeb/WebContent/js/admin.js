@@ -128,6 +128,22 @@ app.directive("formatDocument", function() {
 });
 
 
+app.directive("formatZipCode", function() {
+	return {
+	    link : function(scope, element, attrs) {
+	        var options = {
+	        	onKeyPress: function(val, e, field, options) {
+	        		//$(element).mask('000.000.000/0000-00', options);
+	            }
+	        }
+	        
+	        $(element).mask('00.000.000-00', options);
+	 	       
+	    }
+	  }
+});
+
+
 app.directive('validPassword', function() {
 	  return {
 	    require: 'ngModel',
@@ -490,6 +506,7 @@ app.controller('EmployeePersonCtrl',function ($scope,$http,md5) {
 	$http.get(url_employee_person_get_all)
 	.then(function(response) {
 		$scope.models = response.data;
+		console.log($scope.models);
 	});
 	
 	    	
@@ -508,9 +525,11 @@ app.controller('EmployeePersonCtrl',function ($scope,$http,md5) {
 	$scope.back = function() {		
 		$http.get(url_employee_person_get_all)
 		.then(function(response) {
-			$scope.models = response.data;		
-		});    	
-		$scope.page  = page_list;    			
+			$scope.models = response.data;
+			console.log($scope.models);
+		}); 
+		$scope.page  = page_list; 
+		   			
 	}
 	$scope.edit = function(vmodel) {
 		
@@ -540,11 +559,10 @@ app.controller('EmployeePersonCtrl',function ($scope,$http,md5) {
 		   $scope.model.address_name != null &&
 		   $scope.model.address_number != null &&
 		   $scope.model.address_complement != null &&
+		   $scope.model.zip_code != null &&
 		   $scope.model.role.id != null && $scope.model.role.id != 0 &&
 		   $scope.model.boss.id != null ) {
 			
-			$scope.model.document = $scope.model.document.replace(/\./g,'').replace('-','').replace('/',''); 
-			console.log("document:"+$scope.model.document);
 			
 			$scope.submitted = false;
 			

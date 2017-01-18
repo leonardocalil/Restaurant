@@ -44,6 +44,11 @@
 	    <input type="text" class="form-control" name="address_complement" ng-model="model.address_complement" required  placeholder="Complemento ex: Casa, Apartamento" />
 	    <p ng-show="form.address_complement.$invalid && submitted" class="help-block">Informe o Complemento</p>
 	  </div>
+	  <div class="form-group" ng-class="{ 'has-error': form.zip_code.$invalid && submitted}" >
+	    <label class="control-label">CEP</label>
+	    <input type="text" class="form-control" name="zip_code" ng-minlength="13" ng-model="model.zip_code" required   placeholder="CEP" format-zip-code />
+	    <p ng-show="form.zip_code.$invalid && submitted" class="help-block">Informe o CEP no formato XX.XXX.XXX-XX</p>
+	  </div>
 	  	  
  	</div>
  	<div class="panel-heading">Hieraquia</div>
