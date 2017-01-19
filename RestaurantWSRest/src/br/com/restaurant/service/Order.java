@@ -55,6 +55,21 @@ public class Order {
 		
 		return OrderCtrl.delete(id);
 	}
+	@GET
+	@Path("updateStatus/{id}/{status}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public boolean udpateStatus(@PathParam("id") String id,
+					      @PathParam("status") String status) {
+		
+		return OrderCtrl.updateStatus(id,status);
+	}
 	
+	@GET
+	@Path("getQueue/{siteId}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public List<OrderModel> getQueue(@PathParam("siteId") String siteId) {
+		
+		return OrderCtrl.getQueue(siteId);
+	}
 	
 }

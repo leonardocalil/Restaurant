@@ -1,5 +1,6 @@
 package br.com.restaurant.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import br.com.restaurant.dao.OrderDAO;
@@ -9,7 +10,23 @@ public class OrderCtrl {
 	public static List<OrderModel> getAll() {
 		return new OrderDAO().getAll();
 	}
-	
+	public static List<OrderModel> getQueue(String siteId) {
+		List<OrderModel> orders = new OrderDAO().getAll("status in (0,1) ");
+		List<OrderModel> result = new ArrayList<OrderModel>(); 
+		if(siteId!= null) {
+			if(siteId.equals("0")) {
+				result.addAll(orders);
+			} else {
+				for(OrderModel model : orders) {
+					if(model.getSite().getId() == Integer.valueOf(siteId)) {
+						result.add(model);
+					}
+				}
+			}
+		}
+		return result; 
+	}
+
 	
 	
 	public static OrderModel get(String id) {
@@ -27,6 +44,9 @@ public class OrderCtrl {
 	}
 	public static boolean delete(String id) {
 		return new OrderDAO().delete(id);
+	}
+	public static boolean updateStatus(String id,String status) {
+		return new OrderDAO().updateStatus(id, status);
 	}
 	
 }

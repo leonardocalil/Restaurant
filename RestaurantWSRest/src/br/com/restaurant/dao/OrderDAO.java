@@ -53,7 +53,7 @@ public class OrderDAO extends AbstractDAO<OrderModel> {
 		ResultSet rs = null;
 		
 		try {
-			String sql = "SELECT id , client_id, status, site_id, to_char(o.datetime,'dd/mm/yyyy hh24:mi:ss') datetime "
+			String sql = "SELECT id , client_id, status, site_id, to_char(datetime,'dd/mm/yyyy hh24:mi:ss') datetime "
 					+ "FROM restaurant.order ";					
 			if(filter != null && filter.length() > 0) {
 				sql += "WHERE "+filter; 
@@ -153,6 +153,25 @@ public class OrderDAO extends AbstractDAO<OrderModel> {
 		}
 		return result;*/
 		return false;
+	}
+	public boolean updateStatus(String id, String status) {
+		String sql = "update restaurant.order set status="+status+" "
+					+ "where id = "+id;
+		
+		DBConnection db = new DBConnection();
+		
+		boolean result = true;
+		
+		try {
+			result = db.ExecuteSql(sql);				
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			result = false;
+		} finally {
+			db.finalize();
+		}
+		return result;
 	}
 
 	
