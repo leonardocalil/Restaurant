@@ -15,18 +15,16 @@
     	<th ng-click="ordenar('name')">Nome
     		<span class="glyphicon sort-icon" ng-show="sortKey=='name'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}">
     	</th>
+    	<th ng-click="ordenar('physical_store')">Loja fisica
+    		<span class="glyphicon sort-icon" ng-show="sortKey=='physical_store'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}">
+    	</th>
     	<th ng-click="ordenar('phone')">Telefone
     		<span class="glyphicon sort-icon" ng-show="sortKey=='phone'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}">
     	</th>
     	<th ng-click="ordenar('email')">E-mail
     		<span class="glyphicon sort-icon" ng-show="sortKey=='email'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}">
     	</th>
-    	<th ng-click="ordenar('role')">Cargo
-    		<span class="glyphicon sort-icon" ng-show="sortKey=='role'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}">
-    	</th>
-    	<th ng-click="ordenar('boss')">Supervisor
-    		<span class="glyphicon sort-icon" ng-show="sortKey=='boss'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}">
-    	</th>
+    	<th>Endere&ccedil;o</th>
     	
     	<th>Op&ccedil;&otilde;es</th>
     </thead>
@@ -34,10 +32,10 @@
     	<tr dir-paginate="model in models | filter:procurar | orderBy:sortKey:reverse | itemsPerPage:10">
 		    <td>{{model.id}}</td>
 		    <td>{{model.name}}</td>
+		    <td>{{model.physical_store == 1 && "Sim" || "N&atilde;o"}}</td>
 		    <td>{{model.phone}}</td>
 		    <td>{{model.email}}</td>
-		    <td>{{model.role.name}}</td>
-		    <td>{{model.boss.name}}</td>		           
+		    <td>{{model.address_name}}, {{model.address_number}}, {{model.address_complement}}</td>		           
 		    <td>
 		    	<button type="button" class="btn btn-primary" ng-click="edit(model)">
 		    		<span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>

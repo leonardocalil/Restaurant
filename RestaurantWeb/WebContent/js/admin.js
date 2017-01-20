@@ -267,7 +267,6 @@ app.controller('ProductTypeCtrl',function ($scope,$http) {
 			$http.post(url_product_type_save,$scope.model)
 			.then(function(response) {
 				if(response.data == true) {
-					console.log(response.data);
 					$scope.submitted = false;
 					$scope.back();
 				} else {
@@ -352,7 +351,6 @@ app.controller('ProductItemCtrl',function ($scope,$http) {
 		
 		$scope.submitted = true;
 		
-		console.log($scope.model.productType);
 		if($scope.model.productType != null && $scope.model.productType.id != 0 &&
 		   $scope.model.name != null && $scope.model.name.length > 0 &&
 		   $scope.model.sale_price != null && $scope.model.sale_price.length > 0) {
@@ -440,7 +438,6 @@ app.controller('EmployeeRoleCtrl',function ($scope,$http) {
 			$http.post(url_employee_role_save,$scope.model)
 			.then(function(response) {
 				if(response.data == true) {
-					console.log(response.data);
 					$scope.submitted = false;
 					$scope.back();
 				} else {
@@ -506,7 +503,6 @@ app.controller('EmployeePersonCtrl',function ($scope,$http,md5) {
 	$http.get(url_employee_person_get_all)
 	.then(function(response) {
 		$scope.models = response.data;
-		console.log($scope.models);
 	});
 	
 	    	
@@ -526,7 +522,6 @@ app.controller('EmployeePersonCtrl',function ($scope,$http,md5) {
 		$http.get(url_employee_person_get_all)
 		.then(function(response) {
 			$scope.models = response.data;
-			console.log($scope.models);
 		}); 
 		$scope.page  = page_list; 
 		   			
@@ -699,3 +694,100 @@ app.controller('OrderQueueCtrl',function ($scope,$http,$interval) {
 	
 	
 }); 
+
+
+
+app.controller('StoreCtrl',function ($scope,$http,md5) {
+	
+	var page_list = "pages/store/store_list.html";
+	var page_new = "pages/store/store_new.html";
+	
+	$scope.page  = page_list;
+	
+	$scope.submitted = false;
+	
+	$scope.models = [];
+	
+	$scope.model = newStore();
+		
+		
+	$http.get(url_site_get_all)
+	.then(function(response) {
+		$scope.models = response.data;
+	});
+	
+	   
+	$scope.ordenar = function(keyname){
+        $scope.sortKey = keyname;
+        $scope.reverse = !$scope.reverse;
+    };
+	
+	$scope.new_ = function(vpage) {
+		$scope.model = newStore();				
+		
+		$scope.page = page_new;    			
+	}
+	$scope.back = function() {		
+		$http.get(url_site_get_all)
+		.then(function(response) {
+			$scope.models = response.data;
+		}); 
+		$scope.page  = page_list; 
+		   			
+	}
+	$scope.edit = function(vmodel) {
+		
+		$scope.model = vmodel;
+		
+		$scope.page = page_new;
+	}
+	$scope.delete_ = function(vmodel) {
+		if(confirm("Deseja realmente excluir esse registro ("+vmodel.id+" - "+vmodel.name+")?")) {
+			$http.get(url_site_delete+vmodel.id).
+    		then(function(response) {
+    			if(response.data == true) {
+    				$scope.back();
+    				alert('Registro deletado com sucesso!');
+    			} else {
+    				alert('Erro ao deletar o registro, por gentileza, entre em contato com seu suporte');
+    			}
+    		});
+		}
+	}
+	$scope.save = function() {
+		
+		$scope.submitted = true;
+		
+		if($scope.model.name != null) {
+			
+			if($scope.model.physical_store == 0) {
+				$scope.model.document = null;
+				$scope.model.phone = null;
+				$scope.model.email = null;
+				$scope.model.address_name = null
+				$scope.model.address_number = null;
+				$scope.model.address_complement = null;
+				$scope.model.zip_code = null;
+			}
+			
+			$scope.submitted = false;
+			
+			$http.post(url_site_save,$scope.model)			
+			.then(function(response) {
+				if(response.data == true) {
+					alert('Registro salvo com sucesso!');
+					$scope.back();
+				} else {
+					alert('Erro ao salvar registro, por gentileza, contate o seu suporte.');
+				} 		
+				
+			});    
+			
+		}
+		
+	}
+	
+	
+});
+
+
