@@ -1,8 +1,6 @@
-<h3>Account</h3>
-<div class="col-md-7 account-top" ng-controller="LoginCtrl">
-
+<h3>Acesso ao Sistema</h3>
+<div class="col-md-7 account-top">
   <form>
-	<div ng-if="logged">
 		<div> 	
 			<span>Email*</span>
 			<input type="text"> 
@@ -11,19 +9,13 @@
 			<span class="pass">Password*</span>
 			<input type="password">
 		</div>				
-		<input type="submit" value="Entrar">
-	</div>	 
-	<div ng-if="!logged">
-		<div> 	
-			<span>Nome*</span>
-			<input type="text"> 
+		<input type="submit" ng-click="login()" value="Entrar">	
+		<div class="etc-login-form">
+				<p>Ainda não possui acesso? <a href="#" ng-click="newAccount()">Clique aqui</a></p>		
 		</div>
-		<div> 
-			<span>Documento*</span>
-			<input type="text">
-		</div>				
-		<input type="submit" value="Salvar">
-	</div>
+		<div class="etc-login-form">
+				<p>Esqueceu a senha? <a href="#">Clique aqui</a></p>		
+		</div>
    </form>
 </div>
 		
