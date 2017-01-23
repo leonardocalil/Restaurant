@@ -51,3 +51,6 @@ function newStore() {
 	return {id: 0, name:"", physical_store:0,document:"", phone:"", email:"", address_name:"",address_number:"",address_complement:"",zip_code:""};
 }
 
+function newUser() {
+return {id: 0, name: "", phone: "", email: "", document: "", address_name: "", address_number: "", address_complement: "", zip_code: "", creditcard_number: "", creditcard_name: "", creditcard_flag: "", creditcard_security_code: ""}
+}

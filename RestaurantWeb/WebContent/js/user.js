@@ -154,11 +154,20 @@ app.directive('validPassword', function() {
 	  }
 	});
 
-app.controller('LoginCtrl', function($scope,$http,$location,md5,Auth) {
-	$scope.user = "";
+app.controller('UserCtrl', function($scope,$http,$location,md5,Auth) {
+	$scope.page = "login.html";
+	$scope.user = {};
 	$scope.password = "";
 	
-	$scope.logged = Auth.isLoggedIn();
+	
+	if(Auth.isLoggedIn()) {
+		$scope.page = "user.html";
+		$scope.user = Auth.getUser();
+	}
+	
+	$scope.newAccount = function() {
+		$scope.user = newUser();
+	}
 	
 	$scope.login = function() {
 		
