@@ -1,0 +1,29 @@
+<h3>Account</h3>
+<div class="col-md-7 account-top" ng-controller="LoginCtrl">
+
+  <form>
+	<div ng-if="logged">
+		<div> 	
+			<span>Email*</span>
+			<input type="text"> 
+		</div>
+		<div> 
+			<span class="pass">Password*</span>
+			<input type="password">
+		</div>				
+		<input type="submit" value="Entrar">
+	</div>	 
+	<div ng-if="!logged">
+		<div> 	
+			<span>Nome*</span>
+			<input type="text"> 
+		</div>
+		<div> 
+			<span>Documento*</span>
+			<input type="text">
+		</div>				
+		<input type="submit" value="Salvar">
+	</div>
+   </form>
+</div>
+		
