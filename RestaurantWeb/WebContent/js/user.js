@@ -115,7 +115,7 @@ app.directive("formatZipCode", function() {
 	  }
 });
 
-app.directive("formatZipCode", function() {
+app.directive("formatCreditcard", function() {
 	return {
 	    link : function(scope, element, attrs) {
 	        var options = {
@@ -153,7 +153,6 @@ app.directive('validPassword', function() {
 	    }
 	  }
 	});
-
 
 app.controller('HomeCtrl',function ($scope,$http, Auth) {
 	
