@@ -1,15 +1,96 @@
-<h3>Dados do Usu&aacute;rio</h3>
-<div class="col-md-7 account-top">
-  <form>
-		<div> 	
-			<span>Email*</span>
-			<input type="text"> 
+<h3>Minha Conta</h3>
+<form name="form" novalidate>
+<div class="panel panel-default">
+<div class="panel-heading">Usu&aacute;rio e Senha</div>
+  <div class="panel-body">
+  	  <div class="form-group" ng-class="{ 'has-error': form.login.$invalid && !form.login.$pristine}" >
+		   <label class="control-label">Usu&aacute;rio*</label>
+		   <input type="text" class="form-control" name="login" ng-model="user.login" ng-minlength="3" required placeholder="Usu&aacute;rio" />
+		   <p ng-show="form.login.$invalid && !form.login.$pristine" class="help-block">Usu&aacute;rio deve conter no m&iacute;nimo 3 caracteres</p>
+	  </div>  
+	  <div class="form-group" ng-class="{ 'has-error': form.password.$invalid && !form.password.$pristine}" >
+		   <label class="control-label">Senha*</label>
+		   <input type="password" class="form-control" name="password" ng-model="password" ng-minlength="3" required placeholder="Senha" />
+		   <p ng-show="form.password.$invalid && !form.password.$pristine" class="help-block">Senha deve conter no m&iacute;nimo 3 caracteres</p>
+	  </div>
+	  <div class="form-group" ng-class="{ 'has-error':  form.password_validate.$invalid && !form.password_validate.$pristine}" >
+		   <label class="control-label">Confirmar Senha</label>
+		   <input type="password" class="form-control" name="password_validate" ng-model="password_validate" required placeholder="Confirmar Senha" valid-password="password" />
+		   <p ng-show="form.password_validate.$invalid && !form.password_validate.$pristine" class="help-block">Senha n&atilde;o &eacute; igual a informada no campo anterior</p>
+	  </div>
+  </div>
+  <div class="panel-heading">Informa&ccedil;&otilde;es do Usu&aacute;rio</div>
+  <div class="panel-body">  
+	  <div class="form-group" ng-class="{ 'has-error': form.name.$invalid && !form.name.$pristine}" >
+	    <label class="control-label">Nome*</label>
+	    <input type="text" class="form-control" name="name" ng-model="user.name" ng-minlength="3" required placeholder="Nome" />
+	    <p ng-show="form.name.$invalid && !form.name.$pristine" class="help-block">Nome deve conter no m&iacute;inimo 3 caracter.</p>
+	  </div>
+	  <div class="form-group" ng-class="{ 'has-error': (form.document.$invalid || (user.document.length != 14 && user.document.length != 19)) && !form.name.$pristine}" >
+	    <label class="control-label">Documento*</label>
+	    <input type="text" class="form-control" name="document" ng-model="user.document" ng-minlength="14" required placeholder="Documento" format-document />
+	    <p ng-show="(form.document.$invalid || (user.document.length != 14 && user.document.length != 19)) && !form.document.$pristine" class="help-block">Documento deve conter 11 ou 15 caracteres, ex: XXX.XXX.XXX-XX ou XXX.XXX.XXX/XXXX-XX</p>
+	  </div>
+	  <div class="form-group" ng-class="{ 'has-error': form.phone.$invalid  && !form.name.$pristine}" >
+	    <label class="control-label">Telefone*</label>
+	    <input type="text" class="form-control" name="phone" ng-model="user.phone" ng-minlength="14" required placeholder="Telefone com DDD ex: (XX) XXXX-XXXX " format-phone />
+	    <p ng-show="form.phone.$invalid  && !form.phone.$pristine" class="help-block">Telefone deve conter no m&eacute;nimo 10</p>
+	  </div>
+	  <div class="form-group" ng-class="{ 'has-error': form.email.$invalid && !form.email.$pristine}" >
+	    <label class="control-label">E-mail*</label>
+	    <input type="email" class="form-control" name="email" ng-model="user.email" placeholder="E-mail" />
+	    <p ng-show="form.email.$invalid && !form.email.$pristine" class="help-block">E-mail est&aacute; no formato invalido</p>
+	  </div>
+	  <div class="form-group" ng-class="{ 'has-error': form.address_name.$invalid && !form.address_name.$pristine}" >
+	    <label class="control-label">Endere&ccedil;o*</label>
+	    <input type="text" class="form-control" name="address_name" ng-model="user.address_name" required  placeholder="Endere&ccedil;o" />
+	    <p ng-show="form.address_name.$invalid && !form.address_name.$pristine" class="help-block">Informe o Endere&ccedil;o</p>
+	  </div>
+	  <div class="form-group" ng-class="{ 'has-error': form.address_number.$invalid && !form.address_number.$pristine}" >
+	    <label class="control-label">N&uacute;mero*</label>
+	    <input type="number" class="form-control" name="address_number" ng-model="user.address_number" required  placeholder="N&uacute;mero" />
+	    <p ng-show="form.address_number.$invalid && !form.address_number.$pristine" class="help-block">Informe o N&uacute;mero</p>
+	  </div>
+	  <div class="form-group" ng-class="{ 'has-error': form.address_complement.$invalid && !form.address_complement.$pristine}" >
+	    <label class="control-label">Complemento*</label>
+	    <input type="text" class="form-control" name="address_complement" ng-model="user.address_complement" required  placeholder="Complemento ex: Casa, Apartamento" />
+	    <p ng-show="form.address_complement.$invalid && submitted" class="help-block">Informe o Complemento</p>
+	  </div>
+	  <div class="form-group" ng-class="{ 'has-error': form.zip_code.$invalid && !form.zip_code.$pristine}" >
+	    <label class="control-label">CEP*</label>
+	    <input type="text" class="form-control" name="zip_code" ng-minlength="13" ng-model="user.zip_code" required   placeholder="CEP" format-zip-code />
+	    <p ng-show="form.zip_code.$invalid && !form.zip_code.$pristine" class="help-block">Informe o CEP no formato XX.XXX.XXX-XX</p>
+	  </div>
+	  	  
+  </div>
+  <div class="panel-heading">Cart&atilde;o de Cr&eacute;dito</div>
+  <div class="panel-body">
+  		<div class="form-group" ng-class="{ 'has-error': form.creditcard_number.$invalid && !form.creditcard_number.$pristine}" >
+		    <label class="control-label">N&uacute;mero do Cart&atilde;o</label>
+		    <input type="text" class="form-control" name="creditcard_number" ng-minlength="19" ng-model="user.creditcard_number" placeholder="XXXX XXXX XXXX XXXX" format-creditcard />
+		    <p ng-show="form.zip_code.$invalid && !form.zip_code.$pristine" class="help-block">Informe o numero completo do cart&atilde;o</p>
 		</div>
-		<div> 
-			<span class="pass">Password*</span>
-			<input type="password">
-		</div>				
-		<input type="submit" value="Salvar">	
-   </form>
-</div>
+		<div class="form-group" ng-class="{ 'has-error': (form.creditcard_number.$invalid || form.creditcard_name.$invalid) && !form.creditcard_name.$pristine}" >
+		    <label class="control-label">Nome do Titular do do Cart&atilde;o</label>
+		    <input type="text" class="form-control" name="creditcard_number" ng-minlength="1" ng-model="user.creditcard_number" placeholder="Nome do titular do cart&atilde;o"/>
+		    <p ng-show="(form.creditcard_number.$invalid || form.creditcard_name.$invalid) && !form.creditcard_name.$pristine" class="help-block">Informe o Nome do titular do cart&atilde;o</p>
+		</div>
+		<div class="form-group" ng-class="{ 'has-error': (form.creditcard_number.$invalid || form.creditcard_secutity_code.$invalid) && !form.creditcard_secutity_code.$pristine}" >
+		    <label class="control-label">C&oacute;digo de seguran&ccedil;a</label>
+		    <input type="text" class="form-control" name="creditcard_secutity_code" ng-minlength="3" maxlength="4" ng-model="user.creditcard_secutity_code" placeholder="XXX"/>
+		    <p ng-show="(form.creditcard_number.$invalid || form.creditcard_secutity_code.$invalid) && !form.creditcard_name.$pristine" class="help-block">Informe o c&oacute;digo de seguran&ccedil;a do cart&atilde;o </p>
+		</div>
+  		<div class="form-group" ng-class="{ 'has-error': form.creditcard_number.$invalid && model.creditcard_flag == null && !form.creditcard_flag.$pristine} " >
+			<label class="control-label">Bandeira</label>
+			<select name="role" id="role" ng-model="model.creditcard_flag">  
+				<option id="" value="--SELECIONE--">
+				<option id="VISA" value="VISA">
+				<option id="MASTERCARD" value="MASTERCARD">	      
+		    </select>
+			<p ng-show="form.creditcard_number.$invalid && model.creditcard_flag == null && !form.creditcard_flag.$pristine" class="help-block">Selecione uma bandeira</p> 
+	  	</div>			
+  	</div>    
+  	<input type="submit" ng-click="save()" ng-disabled="form.$invalid" value="Salvar"></input><br />
+</div>  
+</form>
 		

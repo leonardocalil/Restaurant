@@ -289,6 +289,33 @@ ul.header_user_info li.user_desc{
 	float: right;
 	margin-top:0px;
 }
+ul.header_user_info li.user_out{
+	display: block;
+	font-size: 12px;
+    text-transform: uppercase;
+    border-left:1px solid #555;
+	cursor: pointer;
+	/* background: #fb5c22; */
+	-moz-transition: all 0.2s linear;
+	-o-transition: all 0.2s linear;
+	-webkit-transition: all 0.2s linear;
+	transition: all 0.2s linear;
+	float: right;
+	margin-top:0px;
+}
+ul.header_user_info li.user_login{
+	display: block;
+	font-size: 12px;
+    text-transform: uppercase;
+	cursor: pointer;
+	/* background: #fb5c22; */
+	-moz-transition: all 0.2s linear;
+	-o-transition: all 0.2s linear;
+	-webkit-transition: all 0.2s linear;
+	transition: all 0.2s linear;
+	float: right;
+	margin-top:0px;
+}
 .search-box {
 	position: relative;
 }
@@ -2334,6 +2361,7 @@ ul.iphone li.phone_desc {
 .col-md-5.left-account {
   margin: 3em 0 0 0;
 }
+
 }
 @media (max-width:640px){
 .field_content h1 {

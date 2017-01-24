@@ -16,20 +16,6 @@ app.factory('Auth', function(){
 	  }
 });
 
-app.run(['$rootScope', '$location', 'Auth', function ($rootScope, $location, Auth) {
-    $rootScope.$on('$routeChangeStart', function (event) {
-
-        if (!Auth.isLoggedIn()) {
-            //event.preventDefault();
-            $location.path('/login')
-        }
-        else {
-            $location.path('/home');
-        }
-    });
-}]);
-
-
 app.directive('format', ['$filter', function ($filter) {
     return {
         require: '?ngModel',
@@ -129,6 +115,20 @@ app.directive("formatZipCode", function() {
 	  }
 });
 
+app.directive("formatZipCode", function() {
+	return {
+	    link : function(scope, element, attrs) {
+	        var options = {
+	        	onKeyPress: function(val, e, field, options) {
+	        		//$(element).mask('000.000.000/0000-00', options);
+	            }
+	        }
+	        
+	        $(element).mask('0000 0000 0000 0000', options);
+	 	       
+	    }
+	  }
+});
 
 app.directive('validPassword', function() {
 	  return {
@@ -154,126 +154,64 @@ app.directive('validPassword', function() {
 	  }
 	});
 
-app.controller('UserCtrl', function($scope,$http,$location,md5,Auth) {
-	$scope.page = "login.html";
-	$scope.user = {};
-	$scope.password = "";
-	
-	
-	if(Auth.isLoggedIn()) {
-		$scope.page = "user.html";
-		$scope.user = Auth.getUser();
-	}
-	
-	$scope.newAccount = function() {
-		$scope.user = newUser();
-	}
-	
-	$scope.login = function() {
-		
-		$http.post(url_validate_user,{user:$scope.user,password:md5.createHash($scope.password)}).
-		then(function(response) {
-    		var user = response.data;
-    		if(user.id != null) {
-    			Auth.setUser(user);    	
-    			$location.path( "/home" );
-    		} else {    			
-    			alert('Usuario e/ou senha invalido!');
-    		}
-    	});    	
-		
-
-	}
-}); 
 
 app.controller('HomeCtrl',function ($scope,$http, Auth) {
 	
-	$scope.page = "home.html";
+	var page_home = "home.html";
+	var page_user = "user.html"; 
+	
+	$scope.user = {};
+	$scope.page = page_home;
+	
+	$scope.logged = Auth.isLoggedIn();
+	$scope.firstname = "";
+	if($scope.logged) {
+		$scope.user = Auth.isLoggedIn();
+		$scope.firstname = $scope.user.split(' ')[0];
+	}
+	
 	
 	$scope.menuPage = function(vpage) {
 		
 		$scope.page = vpage+".html";    	
 		
+	}
+
+	$scope.newAccount = function() {
+		$scope.user = newUser();
+		$scope.page = page_user;
+	}
+	$scope.logout = function() {
+		Auth.setUser(null);
+		$scope.logged = false;
+		$scope.firstname = "";
+		$scope.page = page_home;
+	}
+	
+	$scope.login = function() {
+		
+		console.log("login:OK");
+		$scope.user = newUser();
+		$scope.user.id = 1;
+		$scope.user.name = 'Teste';
+		
+				
+		Auth.setUser($scope.user);
+		$scope.logged = Auth.isLoggedIn();
+		$scope.firstname = $scope.user.name.split(' ')[0];
+		$scope.page = page_home;
+		/*$http.post(url_validate_client_user,{user:$scope.user,password:md5.createHash($scope.password)}).
+		then(function(response) {
+    		var user = response.data;
+    		if(user.id != null) {
+    			$scope.page = "home.html";    	
+    		} else {    			
+    			alert('Usuario e/ou senha invalido!');
+    		}
+    	});    	
+		*/
 
 	}
 	
 });
-
-
-app.controller('ProductTypeCtrl',function ($scope,$http) {
-	
-	var page_new = "pages/product/product_type_new.html";
-	var page_list = "pages/product/product_type_list.html"; 	
-	
-	$scope.page  = page_list; 
-	
-	
-	$scope.submitted = false;
-	
-	$scope.models = [];
-	
-	$http.get(url_product_type_get_all)
-	.then(function(response) {
-		$scope.models = response.data;		
-	});    	
-	
-	
-	$scope.ordenar = function(keyname){
-        $scope.sortKey = keyname;
-        $scope.reverse = !$scope.reverse;
-    };
-	
-	$scope.new_ = function(vpage) {
-		$scope.model = newProductType();				
-		
-		$scope.page = page_new;    			
-	}
-	$scope.back = function() {		
-		$http.get(url_product_type_get_all)
-		.then(function(response) {
-			$scope.models = response.data;		
-		});    	
-		$scope.page  = page_list;    			
-	}
-	$scope.edit = function(vmodel) {
-		
-		$scope.model = vmodel;
-		$scope.page = page_new;
-	}
-	$scope.delete_ = function(vmodel) {
-		if(confirm("Deseja realmente excluir esse registro ("+vmodel.id+" - "+vmodel.description+")?")) {
-			$http.get(url_product_type_delete+vmodel.id).
-    		then(function(response) {
-    			if(response.data == true) {
-    				$scope.back();
-    				alert('Registro deletado com sucesso!');
-    			} else {
-    				alert('Erro ao deletar o registro, por gentileza, entre em contato com seu suporte');
-    			}
-    		});
-		}
-	}
-	$scope.save = function() {
-		
-		$scope.submitted = true;
-		
-		if($scope.model.description != null && $scope.model.description.length > 0) {
-			
-			
-			$http.post(url_product_type_save,$scope.model)
-			.then(function(response) {
-				if(response.data == true) {
-					$scope.submitted = false;
-					$scope.back();
-				} else {
-					alert('Erro ao salvar registro, por gentileza, contate o seu suporte.');
-				} 		
-				
-			});    	
-			
-		}
-		
-	}
-	
-}); 
 

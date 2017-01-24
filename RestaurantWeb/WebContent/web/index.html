@@ -60,9 +60,15 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 	       </div>
            <div class="header_top_right">		  	 
 			 <ul class="header_user_info">
-			  <a class="login" href="#" ng-click="menuPage('login')">
-				<i class="user"> </i> 
-				<li class="user_desc">My Account</li>
+			  <a class="login" ng-if="logged" href="#" ng-click="menuPage('user')"> 
+				<li class="user_desc">Minha Conta</li>
+			  </a>
+			  <div class="clearfix"></div>
+			  <a class="login" ng-if="!logged" href="#" ng-click="menuPage('login')">
+				<li class="user_desc">Entrar</li>
+			  </a>
+			  <a class="login" href="#" ng-if="logged" ng-click="logout()">
+				<li class="user_desc">Sair</li>
 			  </a>
 		     </ul>		  				
 			 </div>

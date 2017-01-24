@@ -1,21 +1,21 @@
 <h3>Acesso ao Sistema</h3>
-<div class="col-md-7 account-top">
-  <form>
+<div class="account-top">
+  <form name="form">
 		<div> 	
+			
 			<span>Email*</span>
-			<input type="text"> 
+			<input type="text" ng-model="user.login" required /> 
 		</div>
 		<div> 
 			<span class="pass">Password*</span>
-			<input type="password">
+			<input type="password" ng-model="user.password" required />
 		</div>				
-		<input type="submit" ng-click="login()" value="Entrar">	
+		<input type="submit" ng-click="login()" ng-disabled="form.$invalid" value="Entrar"></input><br />	
 		<div class="etc-login-form">
-				<p>Ainda não possui acesso? <a href="#" ng-click="newAccount()">Clique aqui</a></p>		
-		</div>
-		<div class="etc-login-form">
+				<p>Ainda n&atilde;o possui acesso? <a href="#" ng-click="newAccount()">Clique aqui</a></p>
 				<p>Esqueceu a senha? <a href="#">Clique aqui</a></p>		
 		</div>
+		
    </form>
 </div>
 		

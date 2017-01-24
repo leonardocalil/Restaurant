@@ -175,7 +175,7 @@ app.controller('LoginCtrl', function($scope,$http,$location,md5,Auth) {
 	
 	$scope.login = function() {
 		
-		$http.post(url_validate_user,{user:$scope.user,password:md5.createHash($scope.password)}).
+		$http.post(url_validate_employee_user,{user:$scope.user,password:md5.createHash($scope.password)}).
 		then(function(response) {
     		var employee = response.data;
     		if(employee.id != null) {
