@@ -137,7 +137,7 @@ app.directive("formatZipCode", function() {
 	            }
 	        }
 	        
-	        $(element).mask('00.000.000-00', options);
+	        $(element).mask('00.000-000', options);
 	 	       
 	    }
 	  }

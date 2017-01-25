@@ -109,7 +109,7 @@ app.directive("formatZipCode", function() {
 	            }
 	        }
 	        
-	        $(element).mask('00.000.000-00', options);
+	        $(element).mask('00.000-000', options);
 	 	       
 	    }
 	  }
@@ -154,16 +154,21 @@ app.directive('validPassword', function() {
 	  }
 	});
 
-app.controller('HomeCtrl',function ($scope,$http, Auth) {
+app.controller('HomeCtrl',function ($scope,$http, Auth,md5) {
 	
 	var page_home = "home.html";
 	var page_user = "user.html"; 
 	
+
+
 	$scope.user = {};
 	$scope.page = page_home;
 	
-	$scope.logged = Auth.isLoggedIn();
 	$scope.firstname = "";
+	
+	$scope.logged = Auth.isLoggedIn();
+	
+	
 	if($scope.logged) {
 		$scope.user = Auth.isLoggedIn();
 		$scope.firstname = $scope.user.split(' ')[0];
@@ -179,6 +184,7 @@ app.controller('HomeCtrl',function ($scope,$http, Auth) {
 	$scope.newAccount = function() {
 		$scope.user = newUser();
 		$scope.page = page_user;
+		
 	}
 	$scope.logout = function() {
 		Auth.setUser(null);
@@ -188,28 +194,55 @@ app.controller('HomeCtrl',function ($scope,$http, Auth) {
 	}
 	
 	$scope.login = function() {
-		
-		console.log("login:OK");
-		$scope.user = newUser();
-		$scope.user.id = 1;
-		$scope.user.name = 'Teste';
-		
-				
-		Auth.setUser($scope.user);
-		$scope.logged = Auth.isLoggedIn();
-		$scope.firstname = $scope.user.name.split(' ')[0];
-		$scope.page = page_home;
-		/*$http.post(url_validate_client_user,{user:$scope.user,password:md5.createHash($scope.password)}).
+
+		$http.post(url_validate_client_user,{user:$scope.user.login,password:md5.createHash($scope.user.password)}).
 		then(function(response) {
-    		var user = response.data;
-    		if(user.id != null) {
-    			$scope.page = "home.html";    	
+    		var client = response.data;
+    		if(client.id != null) {
+    			
+    			$scope.user = client;
+    					
+    			Auth.setUser($scope.user);
+    			$scope.logged = Auth.isLoggedIn();
+    			$scope.firstname = $scope.user.name.split(' ')[0];
+    			$scope.page = page_home;    			
     		} else {    			
     			alert('Usuario e/ou senha invalido!');
     		}
     	});    	
-		*/
-
+		
+		
+	}
+	
+	$scope.save = function() {
+	
+		$scope.user.password = md5.createHash($scope.user.password);  
+		
+		$http.get(url_client_exists_login+$scope.user.login)			
+		.then(function(response) {
+			if(response.data != 0 && response.data != $scope.user.id ) {
+				alert('Usuário ('+$scope.user.login+') não pode ser utilizado pois já está sendo usado por outra pessoa');
+				
+			} else {
+				$http.post(url_client_save,$scope.user)			
+				.then(function(response) {
+					if(response.data > 0) {
+						
+						$scope.user.id = response.data; 
+						Auth.setUser($scope.user);
+		    			
+		    			$scope.logged = Auth.isLoggedIn();
+		    			$scope.firstname = $scope.user.name.split(' ')[0];
+		    			$scope.page = page_home;  
+					} else {
+						alert('Erro ao cadastrar Cliente, desculpe-nos pelo transtorno e, por gentileza, entre em contato com a empresa e informe este problema');
+					} 		
+					
+				});
+				
+			} 		
+			
+		});
 	}
 	
 });

@@ -1,5 +1,5 @@
 var url_validate_employee_user = 'http://localhost:8080/RestaurantWSRest/rest/employee/validateUser';
-var url_validate_client_user = 'http://localhost:8080/RestaurantWSRest/rest/employee/validateUser';
+var url_validate_client_user = 'http://localhost:8080/RestaurantWSRest/rest/client/validateUser';
 
 
 var url_product_type_get_all = 'http://localhost:8080/RestaurantWSRest/rest/producttype/getAll';
@@ -33,6 +33,8 @@ var url_order_get_all = 'http://localhost:8080/RestaurantWSRest/rest/order/getAl
 var url_order_get_queue = 'http://localhost:8080/RestaurantWSRest/rest/order/getQueue/';
 var url_order_update_status = 'http://localhost:8080/RestaurantWSRest/rest/order/updateStatus/';
 
+var url_client_save = 'http://localhost:8080/RestaurantWSRest/rest/client/save';
+var url_client_exists_login = 'http://localhost:8080/RestaurantWSRest/rest/employee/existsLogin/';
 
 function newProductType() {
 	return {id: 0, description:""};

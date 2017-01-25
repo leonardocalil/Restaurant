@@ -93,7 +93,7 @@ public class OrderDAO extends AbstractDAO<OrderModel> {
 
 	}
 	
-	public boolean save(OrderModel model) {
+	public int save(OrderModel model) {
 		
 		/*String sql = "insert into restaurant.site (id,name) "
 				+ "values(nextval('site_seq'),'"+model.getName()+"')";
@@ -112,9 +112,9 @@ public class OrderDAO extends AbstractDAO<OrderModel> {
 			db.finalize();
 		}
 		return result;*/
-		return false;
+		return 0;
 	}
-	public boolean update(OrderModel model) {
+	public int update(OrderModel model) {
 		/*String sql = "update restaurant.site set name='"+model.getName()+"' "
 				+ "where id = "+model.getId();
 		
@@ -132,7 +132,7 @@ public class OrderDAO extends AbstractDAO<OrderModel> {
 			db.finalize();
 		}
 		return result;*/
-		return false;
+		return 0;
 	}
 	public boolean delete(String id) {
 		/*String sql = "update restaurant.site set deleted=1 "

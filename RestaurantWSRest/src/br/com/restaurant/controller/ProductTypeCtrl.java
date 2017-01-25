@@ -19,9 +19,9 @@ public class ProductTypeCtrl {
 	public static boolean save(ProductTypeModel model) {
 		ProductTypeDAO dao = new ProductTypeDAO();
 		if(model.getId() != 0) {
-			return dao.update(model);
+			return dao.update(model) > 0 ? true : false;
 		} else {
-			return dao.save(model);
+			return dao.save(model) > 0 ? true : false;
 		}
 		
 	}

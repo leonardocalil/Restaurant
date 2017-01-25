@@ -36,9 +36,9 @@ public class OrderCtrl {
 	public static boolean save(OrderModel model) {
 		OrderDAO dao = new OrderDAO();
 		if(model.getId() != 0) {
-			return dao.update(model);
+			return dao.update(model) > 0 ? true : false;
 		} else {
-			return dao.save(model);
+			return dao.save(model) > 0 ? true : false;
 		}
 		
 	}

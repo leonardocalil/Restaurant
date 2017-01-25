@@ -99,7 +99,7 @@ public class ProductDAO extends AbstractDAO<ProductModel> {
 		}
 		return 0;
 	}
-	public boolean save(ProductModel model) {
+	public int save(ProductModel model) {
 		
 		
 	    NumberFormat currencyFormatter = NumberFormat.getCurrencyInstance(Locale.getDefault());
@@ -111,20 +111,19 @@ public class ProductDAO extends AbstractDAO<ProductModel> {
 		
 		DBConnection db = new DBConnection();
 		
-		boolean result = true;
+		int result = 0;
 		
 		try {
-			result = db.ExecuteSql(sql);				
+			result = db.ExecuteSql(sql) ? 1 : 0;				
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-			result = false;
 		} finally {
 			db.finalize();
 		}
 		return result;
 	}
-	public boolean update(ProductModel model) {
+	public int update(ProductModel model) {
 		
 	    NumberFormat currencyFormatter = NumberFormat.getCurrencyInstance(Locale.getDefault());
 
@@ -134,14 +133,13 @@ public class ProductDAO extends AbstractDAO<ProductModel> {
 		
 		DBConnection db = new DBConnection();
 		
-		boolean result = true;
+		int result = 0;
 		
 		try {
-			result = db.ExecuteSql(sql);				
+			result = db.ExecuteSql(sql) ? 1 : 0;				
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-			result = false;
 		} finally {
 			db.finalize();
 		}

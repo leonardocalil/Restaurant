@@ -76,40 +76,38 @@ public class RoleDAO extends AbstractDAO<RoleModel> {
 		}
 		return 0;
 	}
-	public boolean save(RoleModel model) {
+	public int save(RoleModel model) {
 		
 		String sql = "insert into restaurant.role (id,name,description) "
 				+ "values(nextval('role_seq'),'"+model.getName()+"','"+model.getDescription()+"')";
 		
 		DBConnection db = new DBConnection();
 		
-		boolean result = true;
+		int result = 0;
 		
 		try {
-			result = db.ExecuteSql(sql);				
+			result = db.ExecuteSql(sql) ? 1 : 0;				
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-			result = false;
 		} finally {
 			db.finalize();
 		}
 		return result;
 	}
-	public boolean update(RoleModel model) {
+	public int update(RoleModel model) {
 		String sql = "update restaurant.role set name='"+model.getName()+"',description='"+model.getDescription()+"' "
 				+ "where id = "+model.getId();
 		
 		DBConnection db = new DBConnection();
 		
-		boolean result = true;
+		int result = 0;
 		
 		try {
-			result = db.ExecuteSql(sql);				
+			result = db.ExecuteSql(sql) ? 1 : 0;				
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-			result = false;
 		} finally {
 			db.finalize();
 		}

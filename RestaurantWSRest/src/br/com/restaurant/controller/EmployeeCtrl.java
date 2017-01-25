@@ -34,9 +34,9 @@ public class EmployeeCtrl {
 	public static boolean save(EmployeeModel model) {
 		EmployeeDAO dao = new EmployeeDAO();
 		if(model.getId() == 0) {
-			return dao.save(model);
+			return dao.save(model) > 0 ? true : false;
 		} else {
-			return dao.update(model);
+			return dao.update(model) > 0 ? true : false;
 		}
 		
 	}

@@ -28,9 +28,9 @@ public class ClientDAO extends AbstractDAO<ClientModel> {
 			db.finalize();
 		}
 		return "0";
-	}
-	public boolean update(ClientModel model) {
-		boolean result = false;
+	}	
+	public int update(ClientModel model) {
+		int result = 0;
 		String sql = "UPDATE restaurant.client SET name = '"+model.getName()+"',"
 												+ "phone = '"+model.getPhone()+"',"
 												+ "email = '"+model.getEmail()+","
@@ -42,13 +42,17 @@ public class ClientDAO extends AbstractDAO<ClientModel> {
 												+ "creditcard_number='"+model.getCreditcard_number()+"',"
 												+ "creditcard_name='"+model.getCreditcard_name()+"',"
 												+ "creditcard_flag='"+model.getCreditcard_flag()+"',"
-												+ "creditcard_security_code='"+model.getCreditcard_security_code()+"' "
+												+ "creditcard_security_code='"+model.getCreditcard_security_code()+"',"
+												+ "login='"+model.getLogin()+"',"
+												+ "password='"+model.getPassword()+"' "
 												+ "WHERE id = "+model.getId();
 		
 		DBConnection db = new DBConnection();
 		
 		try {
-			result = db.ExecuteSql(sql);				
+			if(db.ExecuteSql(sql)) {
+				result = Integer.valueOf(model.getId());
+			}
 						
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -58,27 +62,33 @@ public class ClientDAO extends AbstractDAO<ClientModel> {
 		}
 		return result;
 	}
-	public boolean save(ClientModel model) {
-		boolean result = false;
+	public int save(ClientModel model) {
+		int result = 0;
 		String sql = "";
-		sql = "INSERT INTO restaurant.client (id,name,phone,email,document,address_name,address_number,address_complement,"
-				+ "zip_code,creditcard_number,creditcard_name,creditcard_flag,creditcard_security_code) "
-				+ "VALUES (nextval('client_seq'),'"+model.getName()+"','"+model.getPhone()+"','"+model.getEmail()+"','"
-				+  model.getDocument()+"','"+model.getAddress_name()+"','"+model.getAddress_number()+"','"+model.getAddress_complement()+"','"
-				+  model.getZip_code()+"','"+model.getCreditcard_number()+"','"+model.getCreditcard_name()+"','"+model.getCreditcard_flag()+"','"
-				+  model.getCreditcard_security_code()+"')";
-		
-		DBConnection db = new DBConnection();
-		
-		try {
-			result = db.ExecuteSql(sql);
-				
-						
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} finally {
-			db.finalize();
+		String modelId =getNewId();
+		if(!modelId.equals("0")) {
+			
+			sql = "INSERT INTO restaurant.client (id,name,phone,email,document,address_name,address_number,address_complement,"
+					+ "zip_code,creditcard_number,creditcard_name,creditcard_flag,creditcard_security_code,login,password) "
+					+ "VALUES ("+modelId+",'"+model.getName()+"','"+model.getPhone()+"','"+model.getEmail()+"','"
+					+  model.getDocument()+"','"+model.getAddress_name()+"','"+model.getAddress_number()+"','"+model.getAddress_complement()+"','"
+					+  model.getZip_code()+"','"+model.getCreditcard_number()+"','"+model.getCreditcard_name()+"','"+model.getCreditcard_flag()+"','"
+					+  model.getCreditcard_security_code()+"','"+model.getLogin()+"','"+model.getPassword()+"')";
+			
+			DBConnection db = new DBConnection();
+			
+			try {
+				if(db.ExecuteSql(sql)) {
+					result = Integer.valueOf(modelId);
+				}
+					
+							
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} finally {
+				db.finalize();
+			}
 		}
 		return result;
 	}
@@ -103,11 +113,12 @@ public class ClientDAO extends AbstractDAO<ClientModel> {
 	public List<ClientModel> getAll(String filter) {
 		List<ClientModel> result = new ArrayList<ClientModel>();
 		String sql = "SELECT id,name,phone,email,document,address_name,address_number,address_complement,"
-				+ "zip_code,creditcard_number,creditcard_name,creditcard_flag,creditcard_security_code "
+				+ "zip_code,creditcard_number,creditcard_name,creditcard_flag,creditcard_security_code,login "
 				+ "FROM restaurant.client c ";
 		if(filter != null && filter.length() > 0) {
 			sql+= "WHERE "+filter;
 		}
+		System.out.println("GETALL:"+sql);
 		DBConnection db = new DBConnection();
 		ResultSet rs = null;
 		try {
@@ -128,6 +139,7 @@ public class ClientDAO extends AbstractDAO<ClientModel> {
 				model.setCreditcard_name(rs.getString("creditcard_name"));
 				model.setCreditcard_flag(rs.getString("creditcard_flag"));
 				model.setCreditcard_security_code(rs.getString("creditcard_security_code"));
+				model.setLogin(rs.getString("login"));
 				result.add(model);				
 			}
 						
@@ -160,15 +172,18 @@ public class ClientDAO extends AbstractDAO<ClientModel> {
 		
 	
 	}
-	public ClientModel getByLogin(String login) {
+	public int existsLogin(String login) {
 		// TODO Auto-generated method stub
 		
-		List<ClientModel> result = getAll("c.login = '"+login+"' ");
+		List<ClientModel> result = getAll("c.login = '"+login+"' and deleted=0 ");
 		if(result.size() > 0) {
-			return result.get(0);
+			result.get(0).getId();
 		}
-		return null;
+		return 0;
 			
+		
+		
+	
 	}
 	
 }

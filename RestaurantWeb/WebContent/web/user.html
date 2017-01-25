@@ -10,12 +10,12 @@
 	  </div>  
 	  <div class="form-group" ng-class="{ 'has-error': form.password.$invalid && !form.password.$pristine}" >
 		   <label class="control-label">Senha*</label>
-		   <input type="password" class="form-control" name="password" ng-model="password" ng-minlength="3" required placeholder="Senha" />
+		   <input type="password" class="form-control" name="password" ng-model="user.password" ng-minlength="3" required placeholder="Senha" />
 		   <p ng-show="form.password.$invalid && !form.password.$pristine" class="help-block">Senha deve conter no m&iacute;nimo 3 caracteres</p>
 	  </div>
 	  <div class="form-group" ng-class="{ 'has-error':  form.password_validate.$invalid && !form.password_validate.$pristine}" >
 		   <label class="control-label">Confirmar Senha</label>
-		   <input type="password" class="form-control" name="password_validate" ng-model="password_validate" required placeholder="Confirmar Senha" valid-password="password" />
+		   <input type="password" class="form-control" name="password_validate" ng-model="password_validate" required placeholder="Confirmar Senha" valid-password="user.password" />
 		   <p ng-show="form.password_validate.$invalid && !form.password_validate.$pristine" class="help-block">Senha n&atilde;o &eacute; igual a informada no campo anterior</p>
 	  </div>
   </div>
@@ -58,8 +58,8 @@
 	  </div>
 	  <div class="form-group" ng-class="{ 'has-error': form.zip_code.$invalid && !form.zip_code.$pristine}" >
 	    <label class="control-label">CEP*</label>
-	    <input type="text" class="form-control" name="zip_code" ng-minlength="13" ng-model="user.zip_code" required   placeholder="CEP" format-zip-code />
-	    <p ng-show="form.zip_code.$invalid && !form.zip_code.$pristine" class="help-block">Informe o CEP no formato XX.XXX.XXX-XX</p>
+	    <input type="text" class="form-control" name="zip_code" ng-minlength="10" ng-model="user.zip_code" required   placeholder="CEP" format-zip-code />
+	    <p ng-show="form.zip_code.$invalid && !form.zip_code.$pristine" class="help-block">Informe o CEP no formato XX.XXX-XXX</p>
 	  </div>
 	  	  
   </div>
@@ -82,15 +82,16 @@
 		</div>
   		<div class="form-group" ng-class="{ 'has-error': form.creditcard_number.$invalid && model.creditcard_flag == null && !form.creditcard_flag.$pristine} " >
 			<label class="control-label">Bandeira</label>
-			<select name="role" id="role" ng-model="model.creditcard_flag">  
-				<option id="" value="--SELECIONE--">
-				<option id="VISA" value="VISA">
-				<option id="MASTERCARD" value="MASTERCARD">	      
+			<select name="role" id="role" ng-model="user.creditcard_flag">  
+				<option value="">--SELECIONE--</option>
+				<option value="VISA">VISA</option>
+				<option value="MASTERCARD">MASTERCARD</option>	      
 		    </select>
 			<p ng-show="form.creditcard_number.$invalid && model.creditcard_flag == null && !form.creditcard_flag.$pristine" class="help-block">Selecione uma bandeira</p> 
 	  	</div>			
-  	</div>    
-  	<input type="submit" ng-click="save()" ng-disabled="form.$invalid" value="Salvar"></input><br />
+  	</div>      	
 </div>  
+<input type="submit" ng-click="save()" ng-disabled="form.$invalid" value="Salvar"></input><br />
+<p ng-show="form.$invalid" class="help-block">Para salvar todos os campos obrigat&otilde;rios n&atilde;o devem ser preenchidos</p>
 </form>
 		

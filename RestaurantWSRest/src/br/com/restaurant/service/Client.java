@@ -29,7 +29,7 @@ public class Client {
 	@POST
 	@Path("save")
 	@Produces(MediaType.APPLICATION_JSON)
-	public boolean save(ClientModel model) {
+	public int save(ClientModel model) {
 		return ClientCtrl.save(model);
 	}
 	
@@ -41,20 +41,19 @@ public class Client {
 		
 		return ClientCtrl.get(id);
 	}
-	@GET
-	@Path("validateUser/{login}/{password}")
+	@POST
+	@Path("validateUser")
 	@Produces(MediaType.APPLICATION_JSON)
-	public ClientModel validateUser(@PathParam("login") String login,
-									  @PathParam("password") String password) {
+	public ClientModel validateUser(String user_password) {
 		
-		return ClientCtrl.validateUser(login,password);
+		return ClientCtrl.validateUser(user_password);
 	}
 	@GET
-	@Path("getByLogin/{login}")
+	@Path("existsLogin/{login}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public ClientModel getByLogin(@PathParam("login") String login) {
-		
-		return ClientCtrl.getByLogin(login);
+	public int existsLogin(@PathParam("login") String login) {
+	
+		return ClientCtrl.existsLogin(login);
 	}
 	@GET
 	@Path("delete/{id}")

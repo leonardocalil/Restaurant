@@ -30,8 +30,8 @@ public class EmployeeDAO extends AbstractDAO<EmployeeModel> {
 		}
 		return "0";
 	}
-	public boolean update(EmployeeModel model) {
-		boolean result = false;
+	public int update(EmployeeModel model) {
+		int result = 0;
 		String sql = "UPDATE restaurant.employee SET name = '"+model.getName()+"',"
 												+ "phone = '"+model.getPhone()+"',"
 												+ "email = '"+model.getEmail()+"',"
@@ -47,7 +47,7 @@ public class EmployeeDAO extends AbstractDAO<EmployeeModel> {
 		DBConnection db = new DBConnection();
 		
 		try {
-			result = db.ExecuteSql(sql);				
+			result = db.ExecuteSql(sql) ? 1 : 0;				
 						
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -77,8 +77,8 @@ public class EmployeeDAO extends AbstractDAO<EmployeeModel> {
 		}
 		return result;
 	}
-	public boolean save(EmployeeModel model) {
-		boolean result = false;
+	public int save(EmployeeModel model) {
+		int result = 0;
 		String sql = "";
 		sql = "INSERT INTO restaurant.employee (id,name,phone,email,document,address_name,address_number,address_complement,"
 				+ "zip_code,role_id,boss_id) "
@@ -89,7 +89,7 @@ public class EmployeeDAO extends AbstractDAO<EmployeeModel> {
 		DBConnection db = new DBConnection();
 		
 		try {
-			result = db.ExecuteSql(sql);
+			result = db.ExecuteSql(sql) ? 1 : 0;
 				
 						
 		} catch (Exception e) {

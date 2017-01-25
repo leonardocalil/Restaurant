@@ -76,40 +76,38 @@ public class ProductTypeDAO extends AbstractDAO<ProductTypeModel> {
 		}
 		return 0;
 	}
-	public boolean save(ProductTypeModel model) {
+	public int save(ProductTypeModel model) {
 		
 		String sql = "insert into restaurant.type_product (id,description) "
 				+ "values(nextval('product_type_seq'),'"+model.getDescription()+"')";
 		
 		DBConnection db = new DBConnection();
 		
-		boolean result = true;
+		int result = 0;
 		
 		try {
-			result = db.ExecuteSql(sql);				
+			result = db.ExecuteSql(sql) ? 1 : 0;				
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-			result = false;
 		} finally {
 			db.finalize();
 		}
 		return result;
 	}
-	public boolean update(ProductTypeModel model) {
+	public int update(ProductTypeModel model) {
 		String sql = "update restaurant.type_product set description='"+model.getDescription()+"' "
 				+ "where id = "+model.getId();
 		
 		DBConnection db = new DBConnection();
 		
-		boolean result = true;
+		int result = 0;
 		
 		try {
-			result = db.ExecuteSql(sql);				
+			result = db.ExecuteSql(sql) ? 1 : 0;				
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-			result = false;
 		} finally {
 			db.finalize();
 		}

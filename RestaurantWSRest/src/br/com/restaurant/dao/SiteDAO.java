@@ -63,7 +63,7 @@ public class SiteDAO extends AbstractDAO<SiteModel> {
 
 	}
 	
-	public boolean save(SiteModel model) {
+	public int save(SiteModel model) {
 		
 		String sql = "insert into restaurant.site (id, name, document,address_name,address_number,address_complement,zip_code,phone,email,physical_store) "
 				+ "values(nextval('site_seq'),'"+model.getName()+"',"
@@ -76,20 +76,19 @@ public class SiteDAO extends AbstractDAO<SiteModel> {
 		
 		DBConnection db = new DBConnection();
 		
-		boolean result = true;
+		int result = 0;
 		
 		try {
-			result = db.ExecuteSql(sql);				
+			result = db.ExecuteSql(sql) ? 1 : 0;				
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-			result = false;
 		} finally {
 			db.finalize();
 		}
 		return result;
 	}
-	public boolean update(SiteModel model) {
+	public int update(SiteModel model) {
 		String sql = "update restaurant.site set name='"+model.getName()+"',"
 				+ "document="+(model.getDocument() != null && model.getDocument().length() > 0 ? "'"+model.getDocument()+"'" : "NULL")+","
 				+ "address_name="+(model.getAddress_name() != null && model.getAddress_name().length() > 0 ? "'"+model.getAddress_name()+"'" : "NULL")+","
@@ -103,14 +102,13 @@ public class SiteDAO extends AbstractDAO<SiteModel> {
 		
 		DBConnection db = new DBConnection();
 		
-		boolean result = true;
+		int result = 0;
 		
 		try {
-			result = db.ExecuteSql(sql);				
+			result = db.ExecuteSql(sql) ? 1 : 0;				
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-			result = false;
 		} finally {
 			db.finalize();
 		}

@@ -8,6 +8,7 @@ public abstract class AbstractDAO <T extends AbstractModel>{
 
 	public abstract List<T> getAll(); 
 	public abstract T get(String id);
-	public abstract boolean update(T model);
+	public abstract int update(T model);
+	public abstract int save(T model);
 	public abstract boolean delete(String id);
 }
