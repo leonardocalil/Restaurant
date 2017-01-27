@@ -69,5 +69,11 @@ public class Product {
 		return ProductCtrl.delete(id);
 	}
 	
-	
+	@GET
+	@Path("getByType/{typeId}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public List<ProductModel> getByType(@PathParam("typeId") String typeId) {
+		
+		return ProductCtrl.getByType(typeId);
+	}
 }

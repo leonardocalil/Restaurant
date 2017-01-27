@@ -14,6 +14,12 @@ public class ProductCtrl {
 		return new ProductDAO().getAll();  
 		
 	}
+	
+	public static List<ProductModel> getAllTypes() {
+		return new ProductDAO().getAll();  
+		
+	}
+	
 	public static String getAllJson() {
 		List<ProductModel> result = new ProductDAO().getAll();  
 		JSONArray array = new JSONArray();
@@ -38,6 +44,7 @@ public class ProductCtrl {
 		model.setId(json.getInt("id"));
 		model.setName(json.getString("name"));
 		model.setDescription(json.getString("description"));
+		
 		if(json.get("cost_price").equals(0)) {
 			model.setCost_price((float)json.getDouble("cost_price")); 
 		} else {
@@ -66,5 +73,9 @@ public class ProductCtrl {
 	public static boolean delete(String id) {
 		return new ProductDAO().delete(id);
 	}
-	
+	public static List<ProductModel> getByType(String typeId) {	
+		return new ProductDAO().getAll("p.deleted = 0 AND tp.deleted = 0 and p.product_type_id = "+typeId);  
+		
+	}
 }
+	

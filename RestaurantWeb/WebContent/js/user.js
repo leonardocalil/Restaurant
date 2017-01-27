@@ -158,10 +158,14 @@ app.controller('HomeCtrl',function ($scope,$http, Auth,md5) {
 	
 	var page_home = "home.html";
 	var page_user = "user.html"; 
+	var page_product = "product.html";
+	var page_product_detail = "detail.html";
 	
 
 
 	$scope.user = {};
+	$scope.menus = {};
+	$scope.menu = {};
 	$scope.page = page_home;
 	
 	$scope.firstname = "";
@@ -174,6 +178,12 @@ app.controller('HomeCtrl',function ($scope,$http, Auth,md5) {
 		$scope.firstname = $scope.user.split(' ')[0];
 	}
 	
+	
+	$http.get(url_product_type_get_all).
+	then(function(response) {
+		$scope.menus = response.data;		
+		console.log("menu_products:"+$scope.menus);
+	});
 	
 	$scope.menuPage = function(vpage) {
 		
@@ -243,6 +253,30 @@ app.controller('HomeCtrl',function ($scope,$http, Auth,md5) {
 			} 		
 			
 		});
+	}
+	
+	$scope.list_product = function(id) {
+		
+		
+		
+		$http.get(url_product_get_by_type+id)			
+		.then(function(response) {
+			angular.forEach($scope.menus, function(value, key){
+				if(value.id == id) {
+					console.log(value);
+					$scope.menu = value;	
+				}	    		    	
+	    	});
+			$scope.products = response.data;
+			$scope.page = page_product;
+		});
+		
+	}
+	$scope.product_detail = function(vProduct) {
+		console.log("Product: "+vProduct);
+		$scope.product = vProduct;
+		$scope.page = page_product_detail;
+		
 	}
 	
 });

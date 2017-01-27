@@ -12,6 +12,8 @@ var url_product_item_get = 'http://localhost:8080/RestaurantWSRest/rest/product/
 var url_product_item_save = 'http://localhost:8080/RestaurantWSRest/rest/product/save';
 var url_product_item_delete = 'http://localhost:8080/RestaurantWSRest/rest/product/delete/';
 
+var url_product_get_by_type = 'http://localhost:8080/RestaurantWSRest/rest/product/getByType/';
+
 var url_employee_role_get_all = 'http://localhost:8080/RestaurantWSRest/rest/role/getAll';
 var url_employee_role_get = 'http://localhost:8080/RestaurantWSRest/rest/role/get/';
 var url_employee_role_save = 'http://localhost:8080/RestaurantWSRest/rest/role/save';
