@@ -154,7 +154,7 @@ app.directive('validPassword', function() {
 	  }
 	});
 
-app.controller('HomeCtrl',function ($scope,$http, Auth,md5) {
+app.controller('HomeCtrl',function ($scope,$http,$window, Auth,md5) {
 	
 	var page_home = "home.html";
 	var page_user = "user.html"; 
@@ -276,7 +276,6 @@ app.controller('HomeCtrl',function ($scope,$http, Auth,md5) {
 		console.log("Product: "+vProduct);
 		$scope.product = vProduct;
 		$scope.page = page_product_detail;
-		
 	}
 	
 });
