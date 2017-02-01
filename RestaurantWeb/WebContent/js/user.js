@@ -1,20 +1,6 @@
-var app = angular.module("UserApp", ["angular-md5"]); 
+var app = angular.module("UserApp", ["angular-md5","ngCart"]); 
 
 
-app.factory('Auth', function(){
-	var user;
-	return{
-	    setUser : function(aUser){
-	    	user = aUser;
-	    },
-	    getUser: function() {
-	    	return user; 
-	    },
-	    isLoggedIn : function(){	    	
-	    	return(user)? user : false;
-	    }
-	  }
-});
 
 app.directive('format', ['$filter', function ($filter) {
     return {
@@ -154,12 +140,13 @@ app.directive('validPassword', function() {
 	  }
 	});
 
-app.controller('HomeCtrl',function ($scope,$http,$window, Auth,md5) {
+app.controller('HomeCtrl',function ($scope,$http,$window, md5,ngCart) {
 	
 	var page_home = "home.html";
 	var page_user = "user.html"; 
 	var page_product = "product.html";
 	var page_product_detail = "detail.html";
+	var page_checkout = "checkout.html";
 	
 
 
@@ -170,11 +157,11 @@ app.controller('HomeCtrl',function ($scope,$http,$window, Auth,md5) {
 	
 	$scope.firstname = "";
 	
-	$scope.logged = Auth.isLoggedIn();
+	$scope.logged = ngCart.getClient() == null ? false : true;
 	
 	
 	if($scope.logged) {
-		$scope.user = Auth.isLoggedIn();
+		$scope.user = ngCart.getClient();
 		$scope.firstname = $scope.user.split(' ')[0];
 	}
 	
@@ -197,7 +184,7 @@ app.controller('HomeCtrl',function ($scope,$http,$window, Auth,md5) {
 		
 	}
 	$scope.logout = function() {
-		Auth.setUser(null);
+		ngCart.setClient(null);
 		$scope.logged = false;
 		$scope.firstname = "";
 		$scope.page = page_home;
@@ -211,9 +198,10 @@ app.controller('HomeCtrl',function ($scope,$http,$window, Auth,md5) {
     		if(client.id != null) {
     			
     			$scope.user = client;
-    					
-    			Auth.setUser($scope.user);
-    			$scope.logged = Auth.isLoggedIn();
+    				
+    			ngCart.setClient($scope.user);
+
+    			$scope.logged = true;
     			$scope.firstname = $scope.user.name.split(' ')[0];
     			$scope.page = page_home;    			
     		} else {    			
@@ -239,9 +227,10 @@ app.controller('HomeCtrl',function ($scope,$http,$window, Auth,md5) {
 					if(response.data > 0) {
 						
 						$scope.user.id = response.data; 
-						Auth.setUser($scope.user);
+						
+						ngCart.setClient($scope.user);
 		    			
-		    			$scope.logged = Auth.isLoggedIn();
+		    			$scope.logged = true;
 		    			$scope.firstname = $scope.user.name.split(' ')[0];
 		    			$scope.page = page_home;  
 					} else {
@@ -276,6 +265,9 @@ app.controller('HomeCtrl',function ($scope,$http,$window, Auth,md5) {
 		console.log("Product: "+vProduct);
 		$scope.product = vProduct;
 		$scope.page = page_product_detail;
+	}
+	$scope.checkout = function() {
+		$scope.page = page_checkout;
 	}
 	
 });
