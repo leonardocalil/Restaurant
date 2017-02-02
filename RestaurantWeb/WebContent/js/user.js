@@ -157,12 +157,14 @@ app.controller('HomeCtrl',function ($scope,$http,$window, md5,ngCart) {
 	
 	$scope.firstname = "";
 	
-	$scope.logged = ngCart.getClient() == null ? false : true;
+	$scope.logged = ngCart.isLoggedIn();
 	
+	console.log("HomeControl:inicio")
 	
-	if($scope.logged) {
+	if(ngCart.isLoggedIn()) {
 		$scope.user = ngCart.getClient();
-		$scope.firstname = $scope.user.split(' ')[0];
+		console.log($scope.user);
+		$scope.firstname = $scope.user.name.split(' ')[0];
 	}
 	
 	
@@ -188,6 +190,7 @@ app.controller('HomeCtrl',function ($scope,$http,$window, md5,ngCart) {
 		$scope.logged = false;
 		$scope.firstname = "";
 		$scope.page = page_home;
+		$window.location.reload();
 	}
 	
 	$scope.login = function() {
@@ -203,8 +206,10 @@ app.controller('HomeCtrl',function ($scope,$http,$window, md5,ngCart) {
 
     			$scope.logged = true;
     			$scope.firstname = $scope.user.name.split(' ')[0];
-    			$scope.page = page_home;    			
-    		} else {    			
+    			$scope.page = page_home;
+    			$window.location.reload();
+    		} else {
+    			
     			alert('Usuario e/ou senha invalido!');
     		}
     	});    	
@@ -268,6 +273,9 @@ app.controller('HomeCtrl',function ($scope,$http,$window, md5,ngCart) {
 	}
 	$scope.checkout = function() {
 		$scope.page = page_checkout;
+	}
+	$scope.confirm_order = function() {
+		console.log("pedido confirmado!");
 	}
 	
 });

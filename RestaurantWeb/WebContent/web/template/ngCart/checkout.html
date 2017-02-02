@@ -1,8 +1,7 @@
 
 <div ng-if="service=='http' || service == 'log'">
-    <button class="btn btn-primary" ng-click="checkout()" ng-disabled="(!ngCart.getTotalItems() || !ngCart.isLoggedIn())" ng-transclude>Confirmar Pedido</button>
+    <button class="btn btn-primary" ng-disabled="(!ngCart.getTotalItems() || !ngCart.isLoggedIn())" ng-transclude>Confirmar Pedido</button>
 </div>
-
 
 <div ng-if="service=='paypal'">
 

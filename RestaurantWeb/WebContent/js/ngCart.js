@@ -34,7 +34,7 @@ angular.module('ngCart', ['ngCart.directives'])
                 shipping : null,
                 taxRate : null,
                 tax : null,
-                client: null,
+                customer: null,
                 items : []
             };
         };
@@ -78,14 +78,17 @@ angular.module('ngCart', ['ngCart.directives'])
             return  this.getCart().shipping;
         };
         this.setClient = function(client) {
-        	this.$cart.client = client;
+        	console.log("setClient:"+client);
+        	this.$cart.customer = client;
+        	$rootScope.$broadcast('ngCart:change', {});
         	return this.getClient();
         };
         this.getClient = function() {        	
-            return this.$cart.client;
+            return this.$cart.customer;
         };
         this.isLoggedIn = function() {
-        	return this.$cart.client == null ? false : true;
+        	console.log("isLogged:"+this.$cart.customer);
+        	return this.$cart.customer == null ? false : true;
         }
 
         this.setTaxRate = function(taxRate){
@@ -187,6 +190,7 @@ angular.module('ngCart', ['ngCart.directives'])
                 taxRate: this.getTaxRate(),
                 subTotal: this.getSubTotal(),
                 totalCost: this.totalCost(),
+                customer: this.getClient(),
                 items:items
             }
         };
@@ -197,6 +201,7 @@ angular.module('ngCart', ['ngCart.directives'])
             _self.init();
             _self.$cart.shipping = storedCart.shipping;
             _self.$cart.tax = storedCart.tax;
+            _self.$cart.customer = storedCart.customer;
 
             angular.forEach(storedCart.items, function (item) {
                 _self.$cart.items.push(new ngCartItem(item._id,  item._name, item._price, item._quantity, item._data));
@@ -305,7 +310,7 @@ angular.module('ngCart', ['ngCart.directives'])
                 price: this.getPrice(),
                 quantity: this.getQuantity(),
                 data: this.getData(),
-                total: this.getTotal()
+                total: this.getTotal()                
             }
         };
 

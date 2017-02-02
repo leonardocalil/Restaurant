@@ -118,7 +118,6 @@ public class ClientDAO extends AbstractDAO<ClientModel> {
 		if(filter != null && filter.length() > 0) {
 			sql+= "WHERE "+filter;
 		}
-		System.out.println("GETALL:"+sql);
 		DBConnection db = new DBConnection();
 		ResultSet rs = null;
 		try {

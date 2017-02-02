@@ -29,19 +29,9 @@
 				</div>
 				
 				<div class="quantity_box">
-					<ul class="product-qty">
-				   <span>Quantidade:</span>
-					   <select>
-						 <option>1</option>
-						 <option>2</option>
-						 <option>3</option>
-						 <option>4</option>
-						 <option>5</option>						 
-					   </select>
-				    </ul>				    
-		   		    <div class="clearfix"></div>
+					<ngcart-addtocart id="{{ product.id }}" name="{{ product.name }}" price="{{ product.sale_price }}" quantity="1" quantity-max="30" data="product">Lancheira</ngcart-addtocart>	
 	   		    </div>
-			    <a href="#" class="btn btn-primary btn-normal btn-inline btn_form button item_add item_1" target="_self">Comprar</a>
+			    
 			</div>
 		    <div class="clearfix"> </div>
 		</div>
@@ -63,14 +53,14 @@
 		  </div>	
 		</div>
 		<div class="col-md-3 tabs" >
-	      <h3 class="m_1">Demais {{product.productType.description}}</h3>
+	      <h3 class="m_1">Outras Op&ccedil;&otilde;es de {{product.productType.description}}</h3>
 	      <div ng-repeat="prd in products" >
 		      <ul class="product" ng-if="prd.id != product.id">
 		      	<li class="product_img"><img src="images/m5.jpg" class="img-responsive" alt=""/></li>
 		      	<li class="product_desc">
 		      		<h4><a href="#">{{prd.name}}</a></h4>
 		      		<p class="single_price">{{prd.sale_proce | currency: "R$"}}</p>
-		      	    <a href="#" class="link-cart">Comprar</a>
+		      	    <a href="#" class="link-cart" ng-click="product_detail(prd)">Ver</a>
 		        </li>
 		      	<div class="clearfix"> </div>
 		      </ul>	      

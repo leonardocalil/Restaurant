@@ -1,2 +1,3 @@
 <ngcart-cart></ngcart-cart>
-<ngcart-checkout service="http" settings="{ url:'/checkout' }"></ngcart-checkout>
+<p ng-show="!logged" class="help-block">Voc&ecirc; deve entrar no sistema para confirmar o pedido. Para entrar <a href="#" ng-click="menuPage('login')">clique aqui</a></p>
+<ngcart-checkout service="http" ng-click="confirm_order()"></ngcart-checkout>
