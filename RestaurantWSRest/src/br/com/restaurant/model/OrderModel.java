@@ -9,6 +9,8 @@ public class OrderModel extends AbstractModel {
 	private StatusModel status;
 	private String datetime;
 	private SiteModel site;
+	private String tax;
+	private String shipping;
 	private List<OrderProductModel> products;
 	
 	
@@ -35,6 +37,19 @@ public class OrderModel extends AbstractModel {
 	}
 	public void setSite(SiteModel site) {
 		this.site = site;
+	}
+	
+	public String getTax() {
+		return tax;
+	}
+	public void setTax(String tax) {
+		this.tax = tax;
+	}
+	public String getShipping() {
+		return shipping;
+	}
+	public void setShipping(String shipping) {
+		this.shipping = shipping;
 	}
 	public List<OrderProductModel> getProducts() {
 		return products;

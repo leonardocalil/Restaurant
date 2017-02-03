@@ -44,7 +44,7 @@ public class Order {
 	@POST
 	@Path("save")
 	@Produces(MediaType.APPLICATION_JSON)
-	public boolean save(OrderModel model) {
+	public int save(OrderModel model) {
 		return OrderCtrl.save(model);
 	}
 
@@ -71,5 +71,13 @@ public class Order {
 		
 		return OrderCtrl.getQueue(siteId);
 	}
+	@POST
+	@Path("put")
+	@Produces(MediaType.APPLICATION_JSON)
+	public int put(String cart) {
+		
+		return OrderCtrl.put(cart);
+	}
+	
 	
 }

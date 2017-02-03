@@ -34,6 +34,8 @@ var url_site_save = 'http://localhost:8080/RestaurantWSRest/rest/site/save'
 var url_order_get_all = 'http://localhost:8080/RestaurantWSRest/rest/order/getAll';	
 var url_order_get_queue = 'http://localhost:8080/RestaurantWSRest/rest/order/getQueue/';
 var url_order_update_status = 'http://localhost:8080/RestaurantWSRest/rest/order/updateStatus/';
+var url_order_put = 'http://localhost:8080/RestaurantWSRest/rest/order/put/';
+
 
 var url_client_save = 'http://localhost:8080/RestaurantWSRest/rest/client/save';
 var url_client_exists_login = 'http://localhost:8080/RestaurantWSRest/rest/employee/existsLogin/';

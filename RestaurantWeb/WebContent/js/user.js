@@ -147,7 +147,7 @@ app.controller('HomeCtrl',function ($scope,$http,$window, md5,ngCart) {
 	var page_product = "product.html";
 	var page_product_detail = "detail.html";
 	var page_checkout = "checkout.html";
-	
+	var page_order_confirmed = "order_confirmed.html";
 
 
 	$scope.user = {};
@@ -275,7 +275,19 @@ app.controller('HomeCtrl',function ($scope,$http,$window, md5,ngCart) {
 		$scope.page = page_checkout;
 	}
 	$scope.confirm_order = function() {
-		console.log("pedido confirmado!");
+		
+		$http.post(url_order_put,ngCart.getCart())			
+		.then(function(response) {
+			if(response.data > 0) {
+				
+				$scope.order_number = response.data; 
+				
+				$scope.page = page_order_confirmed;
+			} else {
+				alert('Erro ao efetuar pedido, desculpe-nos pelo transtorno e, por gentileza, entre em contato com a empresa e informe este problema');
+			} 		
+			
+		});
 	}
 	
 });

@@ -3,8 +3,13 @@ package br.com.restaurant.controller;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+import br.com.restaurant.dao.ClientDAO;
 import br.com.restaurant.dao.OrderDAO;
 import br.com.restaurant.model.OrderModel;
+import br.com.restaurant.model.OrderProductModel;
 
 public class OrderCtrl {
 	public static List<OrderModel> getAll() {
@@ -33,12 +38,12 @@ public class OrderCtrl {
 		return new OrderDAO().get(id);
 	}
 	
-	public static boolean save(OrderModel model) {
+	public static int save(OrderModel model) {
 		OrderDAO dao = new OrderDAO();
 		if(model.getId() != 0) {
-			return dao.update(model) > 0 ? true : false;
+			return dao.update(model);
 		} else {
-			return dao.save(model) > 0 ? true : false;
+			return dao.save(model);
 		}
 		
 	}
@@ -47,6 +52,40 @@ public class OrderCtrl {
 	}
 	public static boolean updateStatus(String id,String status) {
 		return new OrderDAO().updateStatus(id, status);
+	}
+	public static int put(String cart) {
+
+		JSONObject obj = new JSONObject(cart);
+		JSONObject objClient = new JSONObject(obj.get("customer"));
+		//JSONObject objSite = new JSONObject(obj.get("site"));
+		JSONArray objItems = new JSONArray(obj.get("items"));
+		
+		OrderDAO dao = new OrderDAO();
+		OrderModel model = new OrderModel();
+		List<OrderProductModel> products = new ArrayList<OrderProductModel>();
+		
+		for(int ix = 0; ix < objItems.length(); ix++) {			
+			JSONObject item = objItems.getJSONObject(ix);
+			OrderProductModel pmodel = new OrderProductModel();
+			pmodel.setProduct(ProductCtrl.get(item.getString("_id")));
+			pmodel.setQuantity(item.getInt("_quantity"));
+			pmodel.setTotal_price(String.valueOf(item.getDouble("_price") * item.getInt("_quantity")) );
+			pmodel.setTotal_final_price(pmodel.getTotal_price());
+			products.add(pmodel);
+		}
+		
+		
+		model.setClient(ClientCtrl.get(objClient.getString("id")) );
+		//model.setSite(SiteCtrl.get(objSite.getString("id")));
+		model.setTax(obj.getString("tax"));
+		model.setShipping(obj.getString("shipping"));
+		model.setProducts(products);
+		
+		
+		dao.save(model);
+		
+		return 1;
+		
 	}
 	
 }
