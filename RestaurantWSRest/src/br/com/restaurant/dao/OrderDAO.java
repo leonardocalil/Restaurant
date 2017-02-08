@@ -95,15 +95,26 @@ public class OrderDAO extends AbstractDAO<OrderModel> {
 	
 	public int save(OrderModel model) {
 		
-		/*String sql = "insert into restaurant.site (id,name) "
-				+ "values(nextval('site_seq'),'"+model.getName()+"')";
+		int orderId = this.getNewId();
+		
+		String sql = "insert into restaurant.order (id,client_id,datetime,status,site_id,tax,shipping) "
+				+ "values("+orderId+",'"+model.getClient().getId()+"',now(),0,"+model.getSite().getId()+","+model.getTax()+","+model.getShipping()+")";
 		
 		DBConnection db = new DBConnection();
 		
 		boolean result = true;
 		
 		try {
-			result = db.ExecuteSql(sql);				
+			result = db.ExecuteSql(sql);
+			if(result) {
+				for(int ix = 0; ix < model.getProducts().size() && result; ix++) {
+					OrderProductModel pmodel = model.getProducts().get(ix);
+					sql = "insert into restaurant.order_products (id,order_id,product_id,quantity,total_price,total_final_price) "
+							+ "values (nextval('order_product_seq'),"+orderId+","+pmodel.getProduct().getId()+","+pmodel.getQuantity()+","+pmodel.getTotal_final_price()+","+pmodel.getTotal_final_price()+")";
+						
+					result = result & db.ExecuteSql(sql);
+				}										
+			}
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -111,8 +122,11 @@ public class OrderDAO extends AbstractDAO<OrderModel> {
 		} finally {
 			db.finalize();
 		}
-		return result;*/
-		return 0;
+		if(!result) {
+			delete(String.valueOf(orderId));
+			return 0;
+		} 
+		return orderId;
 	}
 	public int update(OrderModel model) {
 		/*String sql = "update restaurant.site set name='"+model.getName()+"' "
@@ -135,7 +149,7 @@ public class OrderDAO extends AbstractDAO<OrderModel> {
 		return 0;
 	}
 	public boolean delete(String id) {
-		/*String sql = "update restaurant.site set deleted=1 "
+		String sql = "delete from restaurant.order_products "
 				+ "where id = "+id;
 		
 		DBConnection db = new DBConnection();
@@ -143,7 +157,13 @@ public class OrderDAO extends AbstractDAO<OrderModel> {
 		boolean result = true;
 		
 		try {
-			result = db.ExecuteSql(sql);				
+			result = db.ExecuteSql(sql);
+			if(result) {
+				sql = "delete from restaurant.order "
+						+ "where id = "+id;
+				result = db.ExecuteSql(sql);
+			}
+			
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -151,8 +171,7 @@ public class OrderDAO extends AbstractDAO<OrderModel> {
 		} finally {
 			db.finalize();
 		}
-		return result;*/
-		return false;
+		return result;
 	}
 	public boolean updateStatus(String id, String status) {
 		String sql = "update restaurant.order set status="+status+" "
@@ -172,6 +191,26 @@ public class OrderDAO extends AbstractDAO<OrderModel> {
 			db.finalize();
 		}
 		return result;
+	}
+	public int getNewId() {
+		// TODO Auto-generated method stub
+		String sql = "select nextval('order_seq')";
+		
+		DBConnection db = new DBConnection();
+		ResultSet rs = null;
+		
+		try {
+			rs = db.ExecuteQuery(sql);
+			if(rs.next()) {
+				return rs.getInt(1);								
+			}			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			db.finalize();
+		}
+		return 0;
 	}
 
 	

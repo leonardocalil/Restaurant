@@ -35,6 +35,7 @@ angular.module('ngCart', ['ngCart.directives'])
                 taxRate : null,
                 tax : null,
                 customer: null,
+                site: null,
                 items : []
             };
         };
@@ -78,16 +79,22 @@ angular.module('ngCart', ['ngCart.directives'])
             return  this.getCart().shipping;
         };
         this.setClient = function(client) {
-        	console.log("setClient:"+client);
         	this.$cart.customer = client;
         	$rootScope.$broadcast('ngCart:change', {});
         	return this.getClient();
-        };
+        };        
         this.getClient = function() {        	
             return this.$cart.customer;
         };
+        this.setSite = function(site) {
+        	this.$cart.site = site;
+        	$rootScope.$broadcast('ngCart:change', {});
+        	return this.getSite();
+        }
+        this.getSite = function() {        	
+            return this.$cart.site;
+        };
         this.isLoggedIn = function() {
-        	console.log("isLogged:"+this.$cart.customer);
         	return this.$cart.customer == null ? false : true;
         }
 
@@ -191,6 +198,7 @@ angular.module('ngCart', ['ngCart.directives'])
                 subTotal: this.getSubTotal(),
                 totalCost: this.totalCost(),
                 customer: this.getClient(),
+                site: this.getSite(),
                 items:items
             }
         };
@@ -202,6 +210,7 @@ angular.module('ngCart', ['ngCart.directives'])
             _self.$cart.shipping = storedCart.shipping;
             _self.$cart.tax = storedCart.tax;
             _self.$cart.customer = storedCart.customer;
+            _self.$cart.site = storedCart.site;
 
             angular.forEach(storedCart.items, function (item) {
                 _self.$cart.items.push(new ngCartItem(item._id,  item._name, item._price, item._quantity, item._data));

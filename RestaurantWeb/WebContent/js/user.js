@@ -153,13 +153,13 @@ app.controller('HomeCtrl',function ($scope,$http,$window, md5,ngCart) {
 	$scope.user = {};
 	$scope.menus = {};
 	$scope.menu = {};
+	$scope.site = {};
 	$scope.page = page_home;
 	
 	$scope.firstname = "";
 	
 	$scope.logged = ngCart.isLoggedIn();
 	
-	console.log("HomeControl:inicio")
 	
 	if(ngCart.isLoggedIn()) {
 		$scope.user = ngCart.getClient();
@@ -272,10 +272,22 @@ app.controller('HomeCtrl',function ($scope,$http,$window, md5,ngCart) {
 		$scope.page = page_product_detail;
 	}
 	$scope.checkout = function() {
-		$scope.page = page_checkout;
+		
+		
+		$http.get(url_site_get_all)			
+		.then(function(response) {
+			$scope.sites = response.data;				
+			$scope.page = page_checkout;
+		});
+		
+		
 	}
 	$scope.confirm_order = function() {
 		
+		if($scope.site.id == null || $scope.site.id == "") {
+			return;
+		}
+		ngCart.setSite($scope.site);
 		$http.post(url_order_put,ngCart.getCart())			
 		.then(function(response) {
 			if(response.data > 0) {
@@ -283,6 +295,8 @@ app.controller('HomeCtrl',function ($scope,$http,$window, md5,ngCart) {
 				$scope.order_number = response.data; 
 				
 				$scope.page = page_order_confirmed;
+				ngCart.empty();
+				
 			} else {
 				alert('Erro ao efetuar pedido, desculpe-nos pelo transtorno e, por gentileza, entre em contato com a empresa e informe este problema');
 			} 		

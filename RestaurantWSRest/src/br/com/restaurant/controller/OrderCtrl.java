@@ -6,7 +6,6 @@ import java.util.List;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import br.com.restaurant.dao.ClientDAO;
 import br.com.restaurant.dao.OrderDAO;
 import br.com.restaurant.model.OrderModel;
 import br.com.restaurant.model.OrderProductModel;
@@ -56,9 +55,9 @@ public class OrderCtrl {
 	public static int put(String cart) {
 
 		JSONObject obj = new JSONObject(cart);
-		JSONObject objClient = new JSONObject(obj.get("customer"));
-		//JSONObject objSite = new JSONObject(obj.get("site"));
-		JSONArray objItems = new JSONArray(obj.get("items"));
+		JSONObject objClient = obj.getJSONObject("customer");
+		JSONObject objSite = obj.getJSONObject("site");
+		JSONArray objItems = obj.getJSONArray("items");
 		
 		OrderDAO dao = new OrderDAO();
 		OrderModel model = new OrderModel();
@@ -75,16 +74,19 @@ public class OrderCtrl {
 		}
 		
 		
-		model.setClient(ClientCtrl.get(objClient.getString("id")) );
-		//model.setSite(SiteCtrl.get(objSite.getString("id")));
-		model.setTax(obj.getString("tax"));
-		model.setShipping(obj.getString("shipping"));
+		model.setClient(ClientCtrl.get(String.valueOf(objClient.getInt("id"))) );
+		model.setSite(SiteCtrl.get(String.valueOf(objSite.getInt("id"))));
+
+		
+		if(!obj.get("tax").equals(JSONObject.NULL))
+			model.setTax(obj.getString("tax"));
+		if(!obj.get("shipping").equals(JSONObject.NULL))	
+			model.setShipping(obj.getString("shipping"));
+		
 		model.setProducts(products);
 		
 		
-		dao.save(model);
-		
-		return 1;
+		return dao.save(model);
 		
 	}
 	

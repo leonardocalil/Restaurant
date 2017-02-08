@@ -1,3 +1,19 @@
 <ngcart-cart></ngcart-cart>
+<br/>
+
+<div ng-if="logged">
+	<hr />
+		<h3>Entregar em:</h3>
+		<select name="site" id="site" ng-model="site.id" 
+			ng-options="site.id as site.name for site in sites">	      
+	    </select><br />
+	    <p ng-show="!site.id" class="help-block">Selecione o local de entrega</p>
+	<hr />
+	
+</div>	    
 <p ng-show="!logged" class="help-block">Voc&ecirc; deve entrar no sistema para confirmar o pedido. Para entrar <a href="#" ng-click="menuPage('login')">clique aqui</a></p>
 <ngcart-checkout service="http" ng-click="confirm_order()"></ngcart-checkout>
+	
+
+
+
