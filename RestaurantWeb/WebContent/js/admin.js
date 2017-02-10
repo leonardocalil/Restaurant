@@ -61,7 +61,7 @@ app.directive('format', ['$filter', function ($filter) {
           elem.priceFormat({
             prefix: '',
             centsSeparator: ',',
-            thousandsSeparator: '.'
+            thousandsSeparator: ''
         });                
                          
                 return elem[0].value;

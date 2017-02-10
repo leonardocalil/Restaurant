@@ -23,7 +23,7 @@ public class ProductDAO extends AbstractDAO<ProductModel> {
 		DBConnection db = new DBConnection();
 		ResultSet rs = null;
 		
-		NumberFormat currencyFormatter = NumberFormat.getCurrencyInstance(Locale.getDefault());
+		//NumberFormat currencyFormatter = NumberFormat.getCurrencyInstance(Locale.getDefault());
 		
 		
 		try {
@@ -43,17 +43,11 @@ public class ProductDAO extends AbstractDAO<ProductModel> {
 				model.setId(rs.getInt("id"));
 				model.setName(rs.getString("name"));
 				model.setDescription(rs.getString("description"));
-				try {
-					if(rs.getString("cost_price") != null) {
-						model.setCost_price(currencyFormatter.parse(rs.getString("cost_price")).floatValue());
-					}
-					if(rs.getString("sale_price") != null) {
-						model.setSale_price(currencyFormatter.parse(rs.getString("sale_price")).floatValue());
-					}
-				} catch (ParseException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
+				
+				model.setCost_price(rs.getString("cost_price"));
+				
+				model.setSale_price(rs.getString("sale_price"));
+				
 				
 				model.setProductType(productType);
 				
@@ -102,11 +96,8 @@ public class ProductDAO extends AbstractDAO<ProductModel> {
 	public int save(ProductModel model) {
 		
 		
-	    NumberFormat currencyFormatter = NumberFormat.getCurrencyInstance(Locale.getDefault());
-    
-	    
-		String sql = "insert into restaurant.product (id,product_type_id,name,description,cost_price,sale_price) "
-				+ "values(nextval('product_seq'),"+model.getProductType().getId()+",'"+model.getName()+"','"+model.getDescription()+"','"+currencyFormatter.format(model.getCost_price())+"','"+currencyFormatter.format(model.getSale_price())+"')";
+	    String sql = "insert into restaurant.product (id,product_type_id,name,description,cost_price,sale_price) "
+				+ "values(nextval('product_seq'),"+model.getProductType().getId()+",'"+model.getName()+"','"+model.getDescription()+"','"+model.getCost_price()+"','"+model.getSale_price()+"')";
 		
 		
 		DBConnection db = new DBConnection();
@@ -125,10 +116,8 @@ public class ProductDAO extends AbstractDAO<ProductModel> {
 	}
 	public int update(ProductModel model) {
 		
-	    NumberFormat currencyFormatter = NumberFormat.getCurrencyInstance(Locale.getDefault());
-
-		
-		String sql = "update restaurant.product set product_type_id="+model.getProductType().getId()+",name='"+model.getName()+"',description='"+model.getDescription()+"',cost_price='"+currencyFormatter.format(model.getCost_price())+"',sale_price = '"+currencyFormatter.format(model.getSale_price())+"' "
+	    
+		String sql = "update restaurant.product set product_type_id="+model.getProductType().getId()+",name='"+model.getName()+"',description='"+model.getDescription()+"',cost_price='"+model.getCost_price()+"',sale_price = '"+model.getSale_price()+"' "
 				+ "where id = "+model.getId();
 		
 		DBConnection db = new DBConnection();

@@ -45,17 +45,10 @@ public class ProductCtrl {
 		model.setName(json.getString("name"));
 		model.setDescription(json.getString("description"));
 		
-		if(json.get("cost_price").equals(0)) {
-			model.setCost_price((float)json.getDouble("cost_price")); 
-		} else {
-			model.setCost_price(Float.valueOf(json.getString("cost_price").replace(".", "").replace(",", ".")) );
-		}
-		if(json.get("sale_price").equals(0)) {
-			model.setSale_price((float)json.getDouble("sale_price")); 
-		} else {
-			model.setSale_price(Float.valueOf(json.getString("sale_price").replace(".", "").replace(",", ".")) );
-		}
 		
+		model.setCost_price(json.getString("cost_price").replace(",", "."));
+		
+		model.setSale_price(json.getString("sale_price").replace(",", "."));
 		
 		ProductTypeModel type = new ProductTypeModel();
 		type.setId(json.getJSONObject("productType").getInt("id"));
