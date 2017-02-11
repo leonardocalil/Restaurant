@@ -27,12 +27,12 @@
   <div class="form-group" ng-class="{ 'has-error': form.cost_price.$invalid && submitted}">  
     <label class="control-label">Pre&ccedil;o de Custo</label>
     <input type="text" class="form-control" name="cost_price" ng-model="model.cost_price" ng-minlength="4" required placeholder="Pre&ccedil;o de Custo" format="number" />
- 	<p ng-show="form.cost_price.$invalid && submitted" class="help-block">Preço de Custo deve ser prenchido.</p>     
+ 	<p ng-show="form.cost_price.$invalid && submitted" class="help-block">Pre&ccedil;o de Custo deve ser prenchido.</p>     
   </div>
   <div class="form-group" ng-class="{ 'has-error': form.sale_price.$invalid && submitted}">  
     <label class="control-label">Pre&ccedil;o de Venda</label>
     <input type="text" class="form-control" name="sale_price" ng-model="model.sale_price" format="number" ng-minlength="4" required placeholder="Pre&ccedil;o de Venda" />
-    <p ng-show="form.sale_price.$invalid && submitted" class="help-block">Preço de Venda deve ser prenchido.</p>     
+    <p ng-show="form.sale_price.$invalid && submitted" class="help-block">Pre&ccedil;o de Venda deve ser prenchido.</p>     
   </div>
   <button type="submit" class="btn btn-primary" ng-click="save()" >Salvar</button>
   
