@@ -140,6 +140,7 @@ app.directive('validPassword', function() {
 	  }
 	});
 
+
 app.controller('HomeCtrl',function ($scope,$http,$window, md5,ngCart) {
 	
 	var page_home = "home.html";
@@ -175,7 +176,7 @@ app.controller('HomeCtrl',function ($scope,$http,$window, md5,ngCart) {
 	});
 	
 	$scope.menuPage = function(vpage) {
-		
+		console.log("menu_page:"+vpage)
 		$scope.page = vpage+".html";    	
 		
 	}
