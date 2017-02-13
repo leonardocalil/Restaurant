@@ -168,15 +168,15 @@ app.controller('HomeCtrl',function ($scope,$http,$window, md5,ngCart) {
 		$scope.firstname = $scope.user.name.split(' ')[0];
 	}
 	
-	
-	$http.get(url_product_type_get_all).
-	then(function(response) {
-		$scope.menus = response.data;		
-		console.log("menu_products:"+$scope.menus);
-	});
-	
+	$scope.loadMenu = function () {
+		console.log("loadMenu");
+		$http.get(url_product_type_get_all).
+		then(function(response) {
+			$scope.menus = response.data;		
+		});
+	}
+	$scope.loadMenu();
 	$scope.menuPage = function(vpage) {
-		console.log("menu_page:"+vpage)
 		$scope.page = vpage+".html";    	
 		
 	}
@@ -304,6 +304,23 @@ app.controller('HomeCtrl',function ($scope,$http,$window, md5,ngCart) {
 			
 		});
 	}
+
+	$(window).on('resize.doResize', function () {
+	    console.log('resize:'+window.innerWidth);
+	    //$window.location.reload();
+	    $scope.loadMenu();
+	    $(window).off("resize.doResize");
+	    //$scope.$apply();
+	    /*$scope.$apply(function(){
+	         //do something to update current scope based on the new innerWidth and let angular update the view.
+	    	console.log('resize apply:'+window.innerWidth);
+	    	$(window).off("resize.doResize");
+	     });*/
+	});
+
 	
 });
+
+
+
 
