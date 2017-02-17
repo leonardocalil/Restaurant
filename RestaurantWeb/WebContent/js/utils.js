@@ -33,6 +33,7 @@ var url_site_save = 'http://31.220.53.196:8080/RestaurantWSRest/rest/site/save'
 	
 var url_order_get_all = 'http://31.220.53.196:8080/RestaurantWSRest/rest/order/getAll';	
 var url_order_get_queue = 'http://31.220.53.196:8080/RestaurantWSRest/rest/order/getQueue/';
+var url_order_get_orders = 'http://31.220.53.196:8080/RestaurantWSRest/rest/order/getOrders/';
 var url_order_update_status = 'http://31.220.53.196:8080/RestaurantWSRest/rest/order/updateStatus/';
 var url_order_put = 'http://31.220.53.196:8080/RestaurantWSRest/rest/order/put/';
 

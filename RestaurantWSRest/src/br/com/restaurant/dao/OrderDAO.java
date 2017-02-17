@@ -21,7 +21,7 @@ public class OrderDAO extends AbstractDAO<OrderModel> {
 		ResultSet rs = null;
 		
 		try {
-			String sql = "SELECT id, order_id, product_id, quantity,total_price,total_final_price "
+			String sql = "SELECT id, order_id, product_id, quantity,unit_price, total_price,total_final_price "
 					+ "FROM restaurant.order_products "
 					+ "WHERE order_id = "+orderId;					
 			
@@ -32,6 +32,7 @@ public class OrderDAO extends AbstractDAO<OrderModel> {
 				model.setOrder_id(rs.getInt("order_id"));
 				model.setProduct(new ProductDAO().get(rs.getString("product_id")));
 				model.setQuantity(rs.getInt("quantity"));
+				model.setUnit_price(rs.getString("unit_price"));
 				model.setTotal_price(rs.getString("total_price"));
 				model.setTotal_final_price(rs.getString("total_final_price"));
 				
@@ -53,7 +54,7 @@ public class OrderDAO extends AbstractDAO<OrderModel> {
 		ResultSet rs = null;
 		
 		try {
-			String sql = "SELECT id , client_id, status, site_id, to_char(datetime,'dd/mm/yyyy hh24:mi:ss') datetime "
+			String sql = "SELECT id , client_id, status, site_id,tax,\"taxRate\",shipping, to_char(datetime,'dd/mm/yyyy hh24:mi:ss') datetime "
 					+ "FROM restaurant.order ";					
 			if(filter != null && filter.length() > 0) {
 				sql += "WHERE "+filter; 
@@ -66,6 +67,10 @@ public class OrderDAO extends AbstractDAO<OrderModel> {
 				model.setClient(new ClientDAO().get(rs.getString("client_id")));
 				model.setSite(new SiteDAO().get(rs.getString("site_id")));
 				model.setStatus(new StatusDAO().get(rs.getString("status")));
+				model.setTax(rs.getString("tax"));
+				model.setTaxRate(rs.getString("taxRate"));
+				model.setShipping(rs.getString("shipping"));
+				
 				
 				model.setProducts(this.getOrderDetail(rs.getString("id")));
 				
@@ -97,8 +102,8 @@ public class OrderDAO extends AbstractDAO<OrderModel> {
 		
 		int orderId = this.getNewId();
 		
-		String sql = "insert into restaurant.order (id,client_id,datetime,status,site_id,tax,shipping) "
-				+ "values("+orderId+",'"+model.getClient().getId()+"',now(),0,"+model.getSite().getId()+","+model.getTax()+","+model.getShipping()+")";
+		String sql = "insert into restaurant.order (id,client_id,datetime,status,site_id,tax,taxRate,shipping) "
+				+ "values("+orderId+",'"+model.getClient().getId()+"',now(),0,"+model.getSite().getId()+","+model.getTax()+","+model.getTaxRate()+","+model.getShipping()+")";
 		
 		DBConnection db = new DBConnection();
 		
@@ -109,8 +114,8 @@ public class OrderDAO extends AbstractDAO<OrderModel> {
 			if(result) {
 				for(int ix = 0; ix < model.getProducts().size() && result; ix++) {
 					OrderProductModel pmodel = model.getProducts().get(ix);
-					sql = "insert into restaurant.order_products (id,order_id,product_id,quantity,total_price,total_final_price) "
-							+ "values (nextval('order_product_seq'),"+orderId+","+pmodel.getProduct().getId()+","+pmodel.getQuantity()+","+pmodel.getTotal_final_price()+","+pmodel.getTotal_final_price()+")";
+					sql = "insert into restaurant.order_products (id,order_id,product_id,quantity,unit_price,total_price,total_final_price) "
+							+ "values (nextval('order_product_seq'),"+orderId+","+pmodel.getProduct().getId()+","+pmodel.getQuantity()+","+pmodel.getUnit_price()+","+pmodel.getTotal_final_price()+","+pmodel.getTotal_final_price()+")";
 						
 					result = result & db.ExecuteSql(sql);
 				}										

@@ -1,4 +1,4 @@
-var app = angular.module("UserApp", ["angular-md5","ngCart"]); 
+var app = angular.module("UserApp", ["angular-md5","ngCart","ui.bootstrap"]); 
 
 
 
@@ -305,17 +305,24 @@ app.controller('HomeCtrl',function ($scope,$http,$window, md5,ngCart) {
 		});
 	}
 
+	$scope.loadOrders = function() {
+		console.log("loadOrders:"+url_order_get_orders+ngCart.getClient().id);
+		$http.get(url_order_get_orders+ngCart.getClient().id)
+		.then(function(response) {
+			$scope.models = response.data;			
+			angular.forEach($scope.models, function(value, key){
+				value.viewOpen = false;
+				console.log("orderId: "+value.id);
+								    		    	
+	    	});
+			
+		});
+	}
+	
 	$(window).on('resize.doResize', function () {
 	    console.log('resize:'+window.innerWidth);
 	    //$window.location.reload();
-	    $scope.loadMenu();
-	    $(window).off("resize.doResize");
-	    //$scope.$apply();
-	    /*$scope.$apply(function(){
-	         //do something to update current scope based on the new innerWidth and let angular update the view.
-	    	console.log('resize apply:'+window.innerWidth);
-	    	$(window).off("resize.doResize");
-	     });*/
+	    $scope.loadMenu();	    
 	});
 
 	

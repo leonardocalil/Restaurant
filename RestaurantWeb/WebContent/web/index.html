@@ -52,6 +52,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 <script src="../js/utils_dev.js"></script>
 <script src="../js/format-number.js"></script>
 <script src="../js/jquery.mask.js"></script>
+<script src="../js/ui-bootstrap-tpls-2.4.0.min.js"></script>
 <script src="../js/user.js"></script>
 
 </head>
@@ -68,7 +69,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 	  	      		<ngcart-summary></ngcart-summary>
 	  	      	</a>
 		      </div>
-	          <p class="empty" ng-if="logged"><a href="#" onclick="alert('Em desenvolvimento')">Meus pedidos</a></p>
+	          <p class="empty" ng-if="logged"><a href="#" ng-click="menuPage('orders')">Meus pedidos</a></p>
 	          <div class="clearfix"> </div>
 	       </div>
            <div class="header_top_right">		  	 
@@ -123,7 +124,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 	    </ul>
 	    <div class="clearfix"></div>	    
 	    <div class="copy">
-           <p> &copy; Arnaldo's Lanches. All Rights Reserved | Design by <a href="http://www.lltecnologia/" target="_blank">LL&T</a></p>
+           <p> &copy; Arnaldo's Lanches. All Rights Reserved | Developed by <a href="http://www.lltecnologia/" target="_blank">LL&T</a> | Design by <a href="http://w3layouts.com" target="_blank">W3layouts</a></p>
 	    </div>
    	</div>
    </div>

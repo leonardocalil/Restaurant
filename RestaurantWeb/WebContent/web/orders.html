@@ -1,0 +1,68 @@
+<div data-ng-init="loadOrders()"> </div>
+<h2>Meus pedidos</h2>
+<div class="alert alert-warning" role="alert" ng-show="models == null">
+   	<h3>Voc&ecirc; ainda n&atilde;o fez pedido pelo aplicativo.</h3>
+</div>
+
+<div ng-if="models != null">
+<uib-accordion close-others="false">
+    <div uib-accordion-group class="panel-default" is-open="model.viewOpen" is-disabled="false"  ng-repeat="model in models | orderBy:'datetime':true">
+      <uib-accordion-heading >
+      	Pedido Nr: {{model.id}}, Data/Hora: {{model.datetime}} , Status: {{model.status.description}}<i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': model.viewOpen, 'glyphicon-chevron-right': !model.viewOpen}" ></i>
+      </uib-accordion-heading>
+      <table class="table table-condensed table-bordered table-striped">
+
+	        <thead>
+	        <tr>
+	            <th>Tipo</th>
+	            <th>Produto</th>
+	            <th>Quantidade</th>
+	            <th>Valor</th>
+	            <th>Total</th>
+	        </tr>
+	        </thead>
+	        <tfoot>
+	        <tr ng-show="model.tax">
+	            <td></td>
+	            <td></td>
+	            <td></td>
+	            <td>Imposto ({{ model.taxRate }}%):</td>
+	            <td>{{ model.tax | currency:'R$' }}</td>
+	        </tr>
+	        <tr ng-show="model.shipping">
+	            <td></td>
+	            <td></td>
+	            <td></td>
+	            <td>Valor da Entrega:</td>
+	            <td>{{ model.shipping | currency:'R$' }}</td>
+	        </tr>
+	        <tr>
+	            <td></td>
+	            <td></td>
+	            <td></td>
+	            <td>Total:</td>
+	            <td>{{ model.total | currency:'R$' }}</td>
+	        </tr>
+	        </tfoot>
+	        <tbody>
+	        <tr ng-repeat="item in model.products track by $index">
+	            <td>{{ item.product.productType.description }}</td>
+	
+	            <td>{{ item.product.name }}</td>
+	            <td>{{ item.quantity | number }}</td>
+	            <td>{{ item.unit_price | currency:'R$'}}</td>
+	            <td>{{ item.total_price | currency:'R$' }}</td>
+	        </tr>
+	        </tbody>
+	    </table>
+	    <hr />
+	    	Entregar em: {{model.site.name}}
+	    <hr />
+		
+		<div ng-if="model.status.id == 0">
+			<button type="button" class="btn btn-warning" ng-click="setStatus(model,3)" >Cancelar Pedido</button>
+		</div>
+      	
+	</div>    
+</uib-accordion>
+</div>

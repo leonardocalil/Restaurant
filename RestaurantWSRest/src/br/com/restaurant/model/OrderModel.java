@@ -10,6 +10,7 @@ public class OrderModel extends AbstractModel {
 	private String datetime;
 	private SiteModel site;
 	private String tax;
+	private String taxRate;
 	private String shipping;
 	private List<OrderProductModel> products;
 	
@@ -56,6 +57,12 @@ public class OrderModel extends AbstractModel {
 	}
 	public void setProducts(List<OrderProductModel> products) {
 		this.products = products;
+	}
+	public String getTaxRate() {
+		return taxRate;
+	}
+	public void setTaxRate(String taxRate) {
+		this.taxRate = taxRate;
 	}
 	
 	

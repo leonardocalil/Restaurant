@@ -78,6 +78,12 @@ public class Order {
 		
 		return OrderCtrl.put(cart);
 	}
-	
+	@GET
+	@Path("getOrders/{clientId}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public List<OrderModel> getOrders(@PathParam("clientId") String clientId) {
+		
+		return OrderCtrl.getOrders(clientId);
+	}
 	
 }

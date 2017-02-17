@@ -6,6 +6,7 @@ public class OrderProductModel extends AbstractModel {
 	private int order_id;
 	private ProductModel product;
 	private int quantity;
+	private String unit_price;
 	private String total_price;
 	private String total_final_price;
 	
@@ -29,6 +30,13 @@ public class OrderProductModel extends AbstractModel {
 	}
 	public String getTotal_price() {
 		return total_price;
+	}
+	
+	public String getUnit_price() {
+		return unit_price;
+	}
+	public void setUnit_price(String unit_price) {
+		this.unit_price = unit_price;
 	}
 	public void setTotal_price(String total_price) {
 		this.total_price = total_price;

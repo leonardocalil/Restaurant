@@ -33,6 +33,7 @@ var url_site_save = 'http://localhost:8080/RestaurantWSRest/rest/site/save'
 	
 var url_order_get_all = 'http://localhost:8080/RestaurantWSRest/rest/order/getAll';	
 var url_order_get_queue = 'http://localhost:8080/RestaurantWSRest/rest/order/getQueue/';
+var url_order_get_orders = 'http://localhost:8080/RestaurantWSRest/rest/order/getOrders/';
 var url_order_update_status = 'http://localhost:8080/RestaurantWSRest/rest/order/updateStatus/';
 var url_order_put = 'http://localhost:8080/RestaurantWSRest/rest/order/put/';
 

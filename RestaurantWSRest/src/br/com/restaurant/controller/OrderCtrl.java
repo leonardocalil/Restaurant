@@ -30,6 +30,10 @@ public class OrderCtrl {
 		}
 		return result; 
 	}
+	public static List<OrderModel> getOrders(String clientId) {
+		return new OrderDAO().getAll("client_id = "+clientId);
+		 
+	}
 
 	
 	
@@ -68,6 +72,7 @@ public class OrderCtrl {
 			OrderProductModel pmodel = new OrderProductModel();
 			pmodel.setProduct(ProductCtrl.get(item.getString("_id")));
 			pmodel.setQuantity(item.getInt("_quantity"));
+			pmodel.setUnit_price(item.getString("_price"));
 			pmodel.setTotal_price(String.valueOf(item.getDouble("_price") * item.getInt("_quantity")) );
 			pmodel.setTotal_final_price(pmodel.getTotal_price());
 			products.add(pmodel);
@@ -77,7 +82,9 @@ public class OrderCtrl {
 		model.setClient(ClientCtrl.get(String.valueOf(objClient.getInt("id"))) );
 		model.setSite(SiteCtrl.get(String.valueOf(objSite.getInt("id"))));
 
-		
+
+		if(!obj.get("taxRate").equals(JSONObject.NULL))
+			model.setTaxRate(obj.getString("taxRate"));
 		if(!obj.get("tax").equals(JSONObject.NULL))
 			model.setTax(obj.getString("tax"));
 		if(!obj.get("shipping").equals(JSONObject.NULL))	
